@@ -12,10 +12,20 @@ function AppleComponent () {
       return `Sergiy owes us ${Math.abs(numberOfApples)} apples`
     }
   }
+  function increaseApples(){
+    setNumberOfApples((currentValue) => currentValue +1)
+  }
+  function decreaseApples(){
+    setNumberOfApples((currentValue) => currentValue -1)
+  }
   return (
+    <>
     <div>
       <h1>{AppleDisplay(numberOfApples)}</h1>
     </div>
+    <button onClick={increaseApples} className='add-btn'>Increase</button>
+    <button onClick={decreaseApples} className='decrease-btn'>Decrease</button>
+    </>
   )
 }
 
