@@ -68,6 +68,10 @@ I will be using:
     - [Why use JSX?](#why-use-jsx)
     - [How JSX is Transformed:](#how-jsx-is-transformed)
     - [Using JSX in React Components:](#using-jsx-in-react-components)
+  - [React Components](#react-components)
+    - [Functional Components](#functional-components)
+    - [Class Components](#class-components)
+    - [Component Lifecycle](#component-lifecycle)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -190,3 +194,59 @@ function Welcome(props) {
 ```
 
 By using JSX, you can create complex UIs in a declarative and intuitive way.
+
+## React Components
+React components are the building blocks of a React application. They can be defined as either functional components or class components.
+
+### Functional Components
+Functional components are simple functions that return JSX. They do not have their own state or lifecycle methods.
+```jsx
+function Greeting(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+```
+
+### Class Components
+Class components are ES6 classes that extend from `React.Component`. They can have their own state and lifecycle methods.
+```jsx
+class Greeting extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+```
+
+### Component Lifecycle
+React components have a lifecycle that you can hook into to run code at specific times. The most commonly used lifecycle methods are:
+- `componentDidMount()`: Called after the component is mounted.
+- `componentDidUpdate()`: Called after the component is updated.
+- `componentWillUnmount()`: Called before the component is unmounted and destroyed.
+
+Example of using lifecycle methods in a class component:
+```jsx
+class Timer extends React.Component {
+  componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 1000);
+  }
+
+  componentDidUpdate() {
+    console.log('Component updated');
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  tick() {
+    this.setState({
+      date: new Date()
+    });
+  }
+
+  render() {
+    return <h1>{this.state.date.toLocaleTimeString()}</h1>;
+  }
+}
+```
+
+By understanding and using React components, you can build complex and interactive UIs in a modular and maintainable way.
