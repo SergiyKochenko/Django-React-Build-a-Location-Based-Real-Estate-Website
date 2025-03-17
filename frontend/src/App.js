@@ -1,20 +1,21 @@
 import logo from './logo.svg'
 import './App.css'
 import SecondComponent from './Components/SecondComponent'
+import React from 'react'
 
 function App () {
-  function MyComponent () {
-    return <h1>This is My First Component</h1>
+  function AppleDisplay (n) {
+    if (n === 0 || n === 1) {
+      return `Sergiy has ${n} apple`
+    } else if (n > 1) {
+      return `Sergiy has ${n} apples`
+    } else {
+      return `Sergiy owes us ${Math.abs(n)} apples`
+    }
   }
   return (
     <div>
-      <h1>This is the app component</h1>
-      <MyComponent />
-      <SecondComponent />
-      <SecondComponent />
-      <SecondComponent />
-      <SecondComponent />
-      <SecondComponent />
+      <h1>{AppleDisplay(-2)}</h1>
     </div>
   )
 }
