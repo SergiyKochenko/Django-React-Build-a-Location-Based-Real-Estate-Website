@@ -63,6 +63,11 @@ I will be using:
   - [Deployment](#deployment)
   - [Credits](#credits)
   - [Acknowledgements](#acknowledgements)
+  - [JSX](#jsx)
+    - [Example of JSX:](#example-of-jsx)
+    - [Why use JSX?](#why-use-jsx)
+    - [How JSX is Transformed:](#how-jsx-is-transformed)
+    - [Using JSX in React Components:](#using-jsx-in-react-components)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -152,3 +157,36 @@ For additional details, please review the following resources:
 ## Acknowledgements
 - Special thanks to Code Institute for the project guidelines and template suggestions.
 - Gratitude to all contributors and resource providers that supported the project development.
+
+## JSX
+JSX (JavaScript XML) is a syntax extension for JavaScript that looks similar to XML or HTML. It is used with React to describe what the UI should look like. JSX makes it easier to write and add HTML in React.
+
+### Example of JSX:
+```jsx
+const element = <h1>Hello, world!</h1>;
+```
+
+### Why use JSX?
+- **Readability:** JSX makes the code easier to understand and maintain.
+- **Integration:** It allows you to write HTML structures in the same file as JavaScript code.
+- **Tooling:** JSX provides better error messages and warnings.
+
+### How JSX is Transformed:
+JSX is not valid JavaScript, so it needs to be transformed into JavaScript code using tools like Babel. For example, the JSX code:
+```jsx
+const element = <h1>Hello, world!</h1>;
+```
+is transformed to:
+```javascript
+const element = React.createElement('h1', null, 'Hello, world!');
+```
+
+### Using JSX in React Components:
+JSX can be used inside React components to define the UI:
+```jsx
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+```
+
+By using JSX, you can create complex UIs in a declarative and intuitive way.
