@@ -17,16 +17,9 @@ import Fruit from './Components/Fruit'
 function App () {
   return(
     <>
-
-{
-  /* <Fruit name='banana' color='yellow' />
-      <Fruit name='strawberry' color='red' /> */
-}
-{theFruits.map((fruit) =>{
-  return <Fruit key={fruit.id} name={fruit.name} color={fruit.color} />
-})}
-
-    </>)
+      <AppleComponent />
+    </>
+  )
 }
 
 export default App
