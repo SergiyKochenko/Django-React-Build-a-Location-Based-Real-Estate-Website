@@ -72,6 +72,10 @@ I will be using:
     - [Functional Components](#functional-components)
     - [Class Components](#class-components)
     - [Component Lifecycle](#component-lifecycle)
+  - [React Properties (Props)](#react-properties-props)
+    - [Passing Props](#passing-props)
+    - [Default Props](#default-props)
+    - [Prop Types](#prop-types)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -249,4 +253,47 @@ class Timer extends React.Component {
 }
 ```
 
-By understanding and using React components, you can build complex and interactive UIs in a modular and maintainable way.
+## React Properties (Props)
+Props (short for properties) are a way of passing data from parent to child components in React. They are read-only and should not be modified by the child component.
+
+### Passing Props
+Props are passed to components similarly to how attributes are passed to HTML elements.
+```jsx
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+const element = <Welcome name="Sara" />;
+```
+
+### Default Props
+You can define default values for props using the `defaultProps` property.
+```jsx
+class Welcome extends React.Component {
+  static defaultProps = {
+    name: 'Guest'
+  };
+
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+```
+
+### Prop Types
+You can specify the types of props using the `prop-types` library to ensure that the props passed to a component are of the correct type.
+```jsx
+import PropTypes from 'prop-types';
+
+class Welcome extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+
+Welcome.propTypes = {
+  name: PropTypes.string
+};
+```
+
+By understanding and using React properties (props), you can create reusable and flexible components that can accept dynamic data.
