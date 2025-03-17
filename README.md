@@ -79,6 +79,9 @@ I will be using:
   - [Looping Through an Array of Data](#looping-through-an-array-of-data)
     - [Example:](#example)
     - [Using Looping in a Component:](#using-looping-in-a-component)
+  - [State (useState Hook)](#state-usestate-hook)
+    - [Example:](#example-1)
+    - [Why use useState?](#why-use-usestate)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -323,5 +326,32 @@ function NumberList() {
   );
 }
 ```
+
+## State (useState Hook)
+The useState hook is a fundamental part of managing state in React functional components. It lets you add state variables to functional components without needing a class.
+
+### Example:
+```jsx
+import React, { useState } from 'react';
+
+function Counter() {
+  // Declare a new state variable "count" with initial value 0
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times.</p>
+      <button onClick={() => setCount(count + 1)}>
+        Increment
+      </button>
+    </div>
+  );
+}
+```
+
+### Why use useState?
+- **Simplicity:** Manage state within functional components.
+- **Reactivity:** The component re-renders automatically when state changes.
+- **Modularity:** Keeps state management localized to the component.
 
 By understanding and using React properties (props), you can create reusable and flexible components that can accept dynamic data.
