@@ -5,11 +5,27 @@ import React from 'react'
 import AppleComponent from './Components/AppleComponent'
 import Fruit from './Components/Fruit'
 
+ const   theFruits = [
+ {id: 1, name: "Apple", color: "red"},
+ {id: 2, name: "Orange", color: "orange"},
+ {id: 3, name: "Banana", color: "yellow"},
+ {id: 4, name: "Kiwi", color: "green"},
+ {id: 5, name: "Mango", color: "red"},
+ {id: 6, name: "Avocado", color: "green"},
+ ]
+
 function App () {
   return(
     <>
-    <Fruit name='banana' color='yellow' />
-    <Fruit name='strawberry' color='red' />
+
+{
+  /* <Fruit name='banana' color='yellow' />
+      <Fruit name='strawberry' color='red' /> */
+}
+{theFruits.map((fruit) =>{
+  return <Fruit key={fruit.id} name={fruit.name} color={fruit.color} />
+})}
+
     </>)
 }
 
