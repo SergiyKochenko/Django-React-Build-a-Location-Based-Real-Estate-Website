@@ -76,6 +76,9 @@ I will be using:
     - [Passing Props](#passing-props)
     - [Default Props](#default-props)
     - [Prop Types](#prop-types)
+  - [Looping Through an Array of Data](#looping-through-an-array-of-data)
+    - [Example:](#example)
+    - [Using Looping in a Component:](#using-looping-in-a-component)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -294,6 +297,31 @@ class Welcome extends React.Component {
 Welcome.propTypes = {
   name: PropTypes.string
 };
+```
+
+## Looping Through an Array of Data
+To render lists in React, you can loop through an array using the `map()` method. Each element should have a unique `key` attribute.
+
+### Example:
+```jsx
+const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((number) =>
+  <li key={number}>{number}</li>
+);
+```
+
+### Using Looping in a Component:
+```jsx
+function NumberList() {
+  const numbers = [1, 2, 3, 4, 5];
+  return (
+    <ul>
+      {numbers.map((number) => (
+        <li key={number}>{number}</li>
+      ))}
+    </ul>
+  );
+}
 ```
 
 By understanding and using React properties (props), you can create reusable and flexible components that can accept dynamic data.
