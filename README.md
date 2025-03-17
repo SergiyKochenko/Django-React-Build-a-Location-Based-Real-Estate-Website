@@ -82,6 +82,9 @@ I will be using:
   - [State (useState Hook)](#state-usestate-hook)
     - [Example:](#example-1)
     - [Why use useState?](#why-use-usestate)
+  - [Handling Events](#handling-events)
+    - [Example:](#example-2)
+    - [Key Points:](#key-points)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -353,5 +356,32 @@ function Counter() {
 - **Simplicity:** Manage state within functional components.
 - **Reactivity:** The component re-renders automatically when state changes.
 - **Modularity:** Keeps state management localized to the component.
+
+## Handling Events
+Handling events in React is similar to handling events on regular DOM elements, but with some syntactical differences. React events are named using camelCase, and event handlers are passed as functions rather than strings.
+
+### Example:
+```jsx
+import React, { useState } from 'react';
+
+function Toggle() {
+  const [isOn, setIsOn] = useState(false);
+
+  const handleClick = () => {
+    setIsOn(!isOn);
+  };
+
+  return (
+    <button onClick={handleClick}>
+      {isOn ? 'ON' : 'OFF'}
+    </button>
+  );
+}
+```
+
+### Key Points:
+- **CamelCase:** Use `onClick` instead of `onclick`.
+- **Function Handler:** Pass a function (e.g., `handleClick`) instead of a string.
+- **Event Object:** The event object is automatically passed to the handler, allowing you to access details about the event if needed.
 
 By understanding and using React properties (props), you can create reusable and flexible components that can accept dynamic data.
