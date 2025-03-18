@@ -85,6 +85,7 @@ I will be using:
   - [Handling Events](#handling-events)
     - [Example:](#example-2)
     - [Key Points:](#key-points)
+  - [React Router \& Navigation](#react-router--navigation)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -384,4 +385,6 @@ function Toggle() {
 - **Function Handler:** Pass a function (e.g., `handleClick`) instead of a string.
 - **Event Object:** The event object is automatically passed to the handler, allowing you to access details about the event if needed.
 
-By understanding and using React properties (props), you can create reusable and flexible components that can accept dynamic data.
+## React Router & Navigation
+React Router DOM has been installed to manage page navigation. This update includes adding navigation to pages such as Home, Login, and Listings.
+By using React Router, you can easily manage navigation and routing between different pages in your application.
