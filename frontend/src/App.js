@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import React from 'react'
+import { StyledEngineProvider } from '@mui/material/styles';
 
 // Components
 import Home from './Components/Home'
@@ -8,6 +9,7 @@ import Listings from './Components/Listings'
 
 function App () {
   return (
+    <StyledEngineProvider injectFirst>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home/>} />
@@ -15,6 +17,7 @@ function App () {
         <Route path='/listings' element={<Listings/>} />
       </Routes>
     </BrowserRouter>
+    </StyledEngineProvider>
   )
 }
 
