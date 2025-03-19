@@ -87,6 +87,7 @@ I will be using:
     - [Key Points:](#key-points)
   - [React Router \& Navigation](#react-router--navigation)
   - [Styling with Material UI](#styling-with-material-ui)
+  - [Building the Home Page Header](#building-the-home-page-header)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -397,3 +398,12 @@ By using React Router, you can easily manage navigation and routing between diff
 
 ## Styling with Material UI
 This project uses Material UI for rapidly building and styling UI components. In addition to the core Material UI packages, the project utilizes `@mui/styles` for custom style solutions.
+
+## Building the Home Page Header
+
+The home page header is built using Material-UI components. Key points:
+- Utilizes AppBar and Toolbar components for the header container.
+- Left navigation shows the brand/logo.
+- Center contains navigation links.
+- Right displays action buttons for adding a property and logging in.
+- Custom styling is applied using makeStyles.
