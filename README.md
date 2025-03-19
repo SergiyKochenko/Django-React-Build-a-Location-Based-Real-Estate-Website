@@ -86,6 +86,7 @@ I will be using:
     - [Example:](#example-2)
     - [Key Points:](#key-points)
   - [React Router \& Navigation](#react-router--navigation)
+  - [Styling with Material UI](#styling-with-material-ui)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -138,6 +139,7 @@ The application is designed with a focus on usability and a seamless user journe
    - **Install Material UI dependencies:**
      ```bash
      npm install @mui/material @emotion/react @emotion/styled
+     npm install @mui/styles
      ```
    - Start the development server:
      ```bash
@@ -392,3 +394,6 @@ function Toggle() {
 ## React Router & Navigation
 React Router DOM has been installed to manage page navigation. This update includes adding navigation to pages such as Home, Login, and Listings.
 By using React Router, you can easily manage navigation and routing between different pages in your application.
+
+## Styling with Material UI
+This project uses Material UI for rapidly building and styling UI components. In addition to the core Material UI packages, the project utilizes `@mui/styles` for custom style solutions.
