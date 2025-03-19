@@ -135,6 +135,10 @@ The application is designed with a focus on usability and a seamless user journe
      ```bash
      npm install
      ```
+   - **Install Material UI dependencies:**
+     ```bash
+     npm install @mui/material @emotion/react @emotion/styled
+     ```
    - Start the development server:
      ```bash
      npm start
