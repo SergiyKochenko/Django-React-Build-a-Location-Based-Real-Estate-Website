@@ -1,17 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Button } from '@mui/material'
 
 function Home () {
+  const [btnColor, setBtnColor] = useState('error')
   return (
-    <div>
-      <h1>This is the home page</h1>
-      <br />
-      <Link to='/login'> Login
-      </Link>
-      <br />
-      <Link to='/listings'> Listings
-      </Link>
-    </div>
+    <Button
+      onClick={() => setBtnColor('success')}
+      color={btnColor}
+      variant='contained'
+      size='large'>
+      TURN GREEN
+    </Button>
   )
 }
 
