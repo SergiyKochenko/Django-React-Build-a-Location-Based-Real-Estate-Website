@@ -23,7 +23,6 @@ function Home () {
   const classes = useStyles();
   return (
     <>
-
     <div className={classes.divStyle}>
     <Typography variant='h4'>This is the title</Typography>
     <Typography variant='body1'>
