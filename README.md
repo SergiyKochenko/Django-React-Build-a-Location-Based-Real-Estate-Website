@@ -90,6 +90,7 @@ I will be using:
   - [Styling with Material UI](#styling-with-material-ui)
   - [Building the Home Page Header](#building-the-home-page-header)
   - [Map Marker \& Popup](#map-marker--popup)
+  - [Displaying Listings on the Map](#displaying-listings-on-the-map)
   - [Marker Position State](#marker-position-state)
 
 ## UX
@@ -434,6 +435,9 @@ The project utilizes map markers and popups to provide interactive maps using Re
 - Leaflet Providers Preview: [leaflet-extras.github.io/leaflet-providers/preview/](https://leaflet-extras.github.io/leaflet-providers/preview/)
 - Map Icons: [mapicons.mapsmarker.com](https://mapicons.mapsmarker.com/)
 - Material UI: [mui.com](https://mui.com/)
+
+## Displaying Listings on the Map
+The Listings component iterates through the `myListings` data set to display property markers on the map. It dynamically assigns an icon based on the property type (House, Apartment, or Office) and configures each marker with a popup that shows listing details such as title, a preview image, and a short description.
 
 ## Marker Position State
 In the Listings component, the marker's position is stored in state using two variables: `latitude` and `longitude`. These values are updated via the "GO EAST" and "GO CENTER" buttons, which reposition the marker on the map.
