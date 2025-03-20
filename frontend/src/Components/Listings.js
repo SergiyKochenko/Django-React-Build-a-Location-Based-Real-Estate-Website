@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 // React Leaflet
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
@@ -29,12 +29,25 @@ function Listings () {
     iconUrl: officeIconPng,
     iconSize: [40, 40],
   })
+
+  const [latitude, setLatitude] = useState(51.4874252340143)
+  const [longitude, setLongitude] = useState(-0.12666449196897142)
+
+  function GoEast () {
+    setLatitude(51.46564994849639)
+    setLongitude(0.2596953983050364)
+  }
+
+  function GoCenter () {
+    setLatitude(51.4874252340143)
+    setLongitude(-0.12666449196897142)
+  }
+
   return (
     <Grid container>
       <Grid item xs={4}>
-        <Typography variant='h1'>Why do we use it?
-It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-</Typography>
+        <Button onClick={GoEast}>GO EAST</Button>
+        <Button onClick={GoCenter}>GO CENTER</Button>
       </Grid>
       <Grid item xs={8}>
         <AppBar position='sticky'>
@@ -46,7 +59,7 @@ It is a long established fact that a reader will be distracted by the readable c
             />
             <Marker 
               icon={officeIcon}
-              position={[51.4874252340143, -0.12666449196897142]}>
+              position={[latitude, longitude]}>
               <Popup>
                 <Typography variant='h5'>A title</Typography>
                 <img src={img1} alt='img1' style={{ height: '14rem', width: '18rem' }} />
