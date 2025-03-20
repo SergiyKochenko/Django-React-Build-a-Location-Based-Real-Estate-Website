@@ -93,6 +93,7 @@ I will be using:
   - [Displaying Listings on the Map](#displaying-listings-on-the-map)
   - [Displaying Listings in MUI Cards](#displaying-listings-in-mui-cards)
   - [Marker Position State](#marker-position-state)
+  - [Price Formatting](#price-formatting)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -445,3 +446,8 @@ In addition to being shown on the map, property listings are presented using Mat
 
 ## Marker Position State
 In the Listings component, the marker's position is stored in state using two variables: `latitude` and `longitude`. These values are updated via the "GO EAST" and "GO CENTER" buttons, which reposition the marker on the map.
+
+## Price Formatting
+Property prices are formatted to include thousand separators. This is achieved by converting the price to a string and applying:
+  
+listing.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
