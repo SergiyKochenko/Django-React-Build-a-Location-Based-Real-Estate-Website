@@ -90,6 +90,7 @@ I will be using:
   - [Styling with Material UI](#styling-with-material-ui)
   - [Building the Home Page Header](#building-the-home-page-header)
   - [Map Marker \& Popup](#map-marker--popup)
+  - [Marker Position State](#marker-position-state)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -433,3 +434,6 @@ The project utilizes map markers and popups to provide interactive maps using Re
 - Leaflet Providers Preview: [leaflet-extras.github.io/leaflet-providers/preview/](https://leaflet-extras.github.io/leaflet-providers/preview/)
 - Map Icons: [mapicons.mapsmarker.com](https://mapicons.mapsmarker.com/)
 - Material UI: [mui.com](https://mui.com/)
+
+## Marker Position State
+In the Listings component, the marker's position is stored in state using two variables: `latitude` and `longitude`. These values are updated via the "GO EAST" and "GO CENTER" buttons, which reposition the marker on the map.

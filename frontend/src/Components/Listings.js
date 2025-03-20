@@ -13,6 +13,7 @@ import apartmentIconPng from './Assets/Mapicons/apartment.png'
 import officeIconPng from './Assets/Mapicons/office.png'
 // Assets
 import img1 from './Assets/img1.jpg'
+import myListings from './Assets/Data/Dummydata'
 
 
 function Listings () {
@@ -57,7 +58,38 @@ function Listings () {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker 
+
+            {myListings.map((listing) => {
+              function IconDisplay () {
+                if (listing.listing_type === 'House') {
+                  return houseIcon
+                } else if (listing.listing_type === 'Apartment') {
+                  return apartmentIcon
+                } else if (listing.listing_type === 'Office') {
+                  return officeIcon
+                }
+              }
+              return (
+                <Marker 
+                key={listing.id}
+                icon={IconDisplay()}
+                  position={[
+                    listing.location.coordinates[0], 
+                    listing.location.coordinates[1],
+                    ]}>
+
+                      <Popup>
+                <Typography variant='h5'>{listing.title}</Typography>
+                <img src={listing.picture1} alt='picture1' style={{ height: '14rem', width: '18rem' }} />
+                <Typography variant='body1'>{listing.description.substring(0, 150)} ...</Typography>
+                <Button variant='contained' fullWidth>View</Button>
+              </Popup>
+
+                </Marker>
+              )
+            })}
+
+            {/* <Marker 
               icon={officeIcon}
               position={[latitude, longitude]}>
               <Popup>
@@ -66,7 +98,7 @@ function Listings () {
                 <Typography variant='body1'>A description</Typography>
                 <Button variant='contained' fullWidth>View</Button>
               </Popup>
-            </Marker>
+            </Marker> */}
           </MapContainer>
         </div>
         </AppBar>
