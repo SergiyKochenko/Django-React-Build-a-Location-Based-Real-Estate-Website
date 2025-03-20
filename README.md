@@ -63,6 +63,7 @@ I will be using:
   - [Deployment](#deployment)
   - [Credits](#credits)
   - [Acknowledgements](#acknowledgements)
+  - [Project Structure \& Code Organization](#project-structure--code-organization)
   - [JSX](#jsx)
     - [Example of JSX:](#example-of-jsx)
     - [Why use JSX?](#why-use-jsx)
@@ -182,6 +183,13 @@ For additional details, please review the following resources:
 ## Acknowledgements
 - Special thanks to Code Institute for the project guidelines and template suggestions.
 - Gratitude to all contributors and resource providers that supported the project development.
+
+## Project Structure & Code Organization
+
+- **Assets Added:** A new Assets folder now holds images (e.g., city.jpg) used in the Home page.
+- **Header Component Created:** A dedicated Header component builds the navigation bar with Material-UI's AppBar and Toolbar.
+- **Home Page Re-Organized:** The Home page now leverages the Header component and displays a promotional background image, with overlay text and a call-to-action button.
+- **Code Re-Organization:** Components are now separated for clarity, and styling is maintained using Material-UI's makeStyles.
 
 ## JSX
 JSX (JavaScript XML) is a syntax extension for JavaScript that looks similar to XML or HTML. It is used with React to describe what the UI should look like. JSX makes it easier to write and add HTML in React.
