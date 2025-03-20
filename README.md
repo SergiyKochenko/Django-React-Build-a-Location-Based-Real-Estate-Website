@@ -143,6 +143,14 @@ The application is designed with a focus on usability and a seamless user journe
      npm install @mui/material @emotion/react @emotion/styled
      npm install @mui/styles
      ```
+   - **Install React-Leaflet dependencies:**
+     ```bash
+     npm install leaflet react-leaflet
+     ```
+   - Include Leaflet's CSS in the project (e.g., in index.html or a main CSS file):
+     ```html
+     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+     ```
    - Start the development server:
      ```bash
      npm start
