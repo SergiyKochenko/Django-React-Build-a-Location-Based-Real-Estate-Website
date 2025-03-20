@@ -89,6 +89,7 @@ I will be using:
   - [React Router \& Navigation](#react-router--navigation)
   - [Styling with Material UI](#styling-with-material-ui)
   - [Building the Home Page Header](#building-the-home-page-header)
+  - [Map Marker \& Popup](#map-marker--popup)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -423,3 +424,12 @@ The home page header is built using Material-UI components. Key points:
 - Center contains navigation links.
 - Right displays action buttons for adding a property and logging in.
 - Custom styling is applied using makeStyles.
+
+## Map Marker & Popup
+
+The project utilizes map markers and popups to provide interactive maps using React-Leaflet. For quick-start examples and detailed documentation, refer to:
+- Leaflet Quick Start Guide: [leafletjs.com/examples/quick-start/](https://leafletjs.com/examples/quick-start/)
+- React-Leaflet Documentation: [react-leaflet.js.org](https://react-leaflet.js.org/)
+- Leaflet Providers Preview: [leaflet-extras.github.io/leaflet-providers/preview/](https://leaflet-extras.github.io/leaflet-providers/preview/)
+- Map Icons: [mapicons.mapsmarker.com](https://mapicons.mapsmarker.com/)
+- Material UI: [mui.com](https://mui.com/)
