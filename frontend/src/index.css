@@ -1,26 +1,4 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-
-.add-btn {
-  background-color: #4CAF50;
-  color: white;
-  margin-right: 10px;
-}
-
-.decrease-btn {
-  background-color: #f44336;
-  color: white;
-  margin-left: 10px;
+.leaflet-container {
+  height: 100%;
+  width: 100%;
 }
