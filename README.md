@@ -91,6 +91,7 @@ I will be using:
   - [Building the Home Page Header](#building-the-home-page-header)
   - [Map Marker \& Popup](#map-marker--popup)
   - [Displaying Listings on the Map](#displaying-listings-on-the-map)
+  - [Displaying Listings in MUI Cards](#displaying-listings-in-mui-cards)
   - [Marker Position State](#marker-position-state)
 
 ## UX
@@ -438,6 +439,9 @@ The project utilizes map markers and popups to provide interactive maps using Re
 
 ## Displaying Listings on the Map
 The Listings component iterates through the `myListings` data set to display property markers on the map. It dynamically assigns an icon based on the property type (House, Apartment, or Office) and configures each marker with a popup that shows listing details such as title, a preview image, and a short description.
+
+## Displaying Listings in MUI Cards
+In addition to being shown on the map, property listings are presented using Material UI Cards. Each card displays listing details including the title, an image, a brief description, and price information overlaid on the picture, offering users an attractive and organized view of available properties.
 
 ## Marker Position State
 In the Listings component, the marker's position is stored in state using two variables: `latitude` and `longitude`. These values are updated via the "GO EAST" and "GO CENTER" buttons, which reposition the marker on the map.
