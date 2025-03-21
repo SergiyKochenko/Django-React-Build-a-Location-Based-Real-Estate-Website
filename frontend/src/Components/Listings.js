@@ -1,7 +1,14 @@
 import React, { useState } from 'react'
 
 // React Leaflet
-import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
+import { 
+  MapContainer, 
+  TileLayer, 
+  Marker, 
+  Popup, 
+  Polyline,
+  Polygon,
+} from 'react-leaflet'
 import { Icon } from 'leaflet'
 
 // Material UI
@@ -24,6 +31,7 @@ import officeIconPng from './Assets/Mapicons/office.png'
 // Assets
 import img1 from './Assets/img1.jpg'
 import myListings from './Assets/Data/Dummydata'
+import polygonOne from './Shape'
 
 const useStyles = makeStyles({
   cardStyle: {
@@ -77,6 +85,12 @@ function Listings () {
     setLatitude(51.4874252340143)
     setLongitude(-0.12666449196897142)
   }
+
+  const polyOne = [
+    [51.505, -0.09],
+    [51.51, -0.1],
+    [51.51, -0.12],
+  ]
 
   return (
     <Grid container>
@@ -136,6 +150,15 @@ function Listings () {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
+
+            <Polyline positions={polyOne} weight={10} color='green' />
+            <Polygon 
+              positions={polygonOne} 
+              color='yellow' 
+              fillColor='blue' 
+              fillOpacity={0.9}
+              opacity={0}
+              />
 
             {myListings.map((listing) => {
               function IconDisplay () {
