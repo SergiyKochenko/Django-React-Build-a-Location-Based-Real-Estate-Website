@@ -59,6 +59,7 @@ I will be using:
   - [Features](#features)
   - [Technologies Used](#technologies-used)
   - [Installation \& Setup](#installation--setup)
+  - [Installing Django](#installing-django)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -166,6 +167,14 @@ The application is designed with a focus on usability and a seamless user journe
      npm start
      ```
    - Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.
+
+## Installing Django
+To get started with Django, run the following commands:
+```bash
+pip install Django
+pip freeze
+django-anmin startproject backend
+```
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
