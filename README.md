@@ -125,8 +125,12 @@ The application is designed with a focus on usability and a seamless user journe
    - Navigate to the Django project folder.
    - Create and activate a virtual environment:
      ```bash
-     python -m venv venv
-     venv\Scripts\activate
+     python -m venv myvenv
+     source myvenv/Scripts/activate
+     ```
+   - To exit the virtual environment, run:
+     ```bash
+     deactivate
      ```
    - Install backend dependencies:
      ```bash
