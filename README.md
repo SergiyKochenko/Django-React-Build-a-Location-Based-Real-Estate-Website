@@ -96,6 +96,7 @@ I will be using:
   - [Marker Position State](#marker-position-state)
   - [Price Formatting](#price-formatting)
   - [Drawing/Importing Shapes (Polygons, Polylines) in React-Leaflet](#drawingimporting-shapes-polygons-polylines-in-react-leaflet)
+  - [Setting up the Listing Model](#setting-up-the-listing-model)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -468,3 +469,10 @@ listing.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
 ## Drawing/Importing Shapes (Polygons, Polylines) in React-Leaflet
 React-Leaflet supports drawing various shapes on maps. In the Listings component, shapes such as polylines and polygons are rendered by importing and configuring the Polyline and Polygon components. These shapes enhance the map visualization by outlining routes or areas with custom colors, weights, opacities, and fill properties.
+
+## Setting up the Listing Model
+The Listing model is defined in `backend/listings/models.py` and includes fields such as title, description, area, borough, listing type, property status, price, rental frequency, rooms, and additional amenities. After updating the model, run:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
