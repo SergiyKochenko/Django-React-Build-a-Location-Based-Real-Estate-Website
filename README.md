@@ -60,6 +60,8 @@ I will be using:
   - [Technologies Used](#technologies-used)
   - [Installation \& Setup](#installation--setup)
   - [Installing Django](#installing-django)
+  - [Installing GeoDjango](#installing-geodjango)
+- [settings.py](#settingspy)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -177,6 +179,22 @@ pip install Django
 pip freeze
 django-anmin startproject backend
 ```
+
+## Installing GeoDjango
+For setting up GeoDjango on Windows, follow these steps:
+1. Download the appropriate GDAL wheel from: https://wheelhouse.openquake.org/v3/windows/py311/?utm_source=chatgpt.com
+2. Install GDAL using pip:
+```bash
+pip install path\to\GDAL-3.7.3-cp311-cp311-win_amd64.whl
+```
+3. Add the following to your settings.py file:
+# settings.py
+import os
+if os.name == 'nt':
+    VENV_BASE = os.environ['VIRTUAL_ENV']
+    os.environ['PATH'] = os.path.join(VENV_BASE, 'Lib\\site-packages\\osgeo') + ';' + os.environ['PATH']
+    os.environ['PROJ_LIB'] = os.path.join(VENV_BASE, 'Lib\\site-packages\\osgeo\\data\\proj') + ';' + os.environ['PATH']
+    
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
