@@ -62,6 +62,16 @@ I will be using:
   - [Installing Django](#installing-django)
   - [Installing GeoDjango](#installing-geodjango)
 - [settings.py](#settingspy)
+  - [Setting Up a Custom User Model](#setting-up-a-custom-user-model)
+  - [Creating .env File](#creating-env-file)
+  - [Creating a Superuser](#creating-a-superuser)
+  - [Usage](#usage)
+  - [Deployment](#deployment)
+  - [Credits](#credits)
+  - [Acknowledgements](#acknowledgements)
+  - [Project Structure \& Code Organization](#project-structure--code-organization)
+  - [JSX](#jsx)
+    - [Example of JSX:](#example-of-jsx)
     - [Why use JSX?](#why-use-jsx)
     - [How JSX is Transformed:](#how-jsx-is-transformed)
     - [Using JSX in React Components:](#using-jsx-in-react-components)
@@ -188,6 +198,65 @@ For setting up GeoDjango on Windows, follow these steps:
        os.environ['PATH'] = os.path.join(VENV_BASE, 'Lib\\site-packages\\osgeo') + ';' + os.environ['PATH']
        os.environ['PROJ_LIB'] = os.path.join(VENV_BASE, 'Lib\\site-packages\\osgeo\\data\\proj') + ';' + os.environ['PATH']
    ```
+
+## Setting Up Spatial Database (PostgresSQL & PostGIS)
+Install the required adapter:
+```bash
+pip install psycopg2
+```
+Configure your DATABASES setting in `backend/backend/settings.py` as follows:
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'xxxxxxxxxxxxxxx',
+        'NAME': 'xxxxxxxxxxxxxxx',
+        'USER': 'xxxxxxxxxxxxxxx',
+        'PASSWORD': 'xxxxxxxxxxxxxxx',
+        'HOST': 'xxxxxxxxxxxxxxx',
+        'PORT': 'xxxx',
+    }
+}
+```
+For more details, refer to your Render dashboard: https://dashboard.render.com/d/dpg-cvfj0s1opnds73batjl0-a
+
+## Setting Up a Custom User Model
+To support custom user authentication, create an app (e.g., "users") and define your custom user model. Then update your settings by adding:
+```python
+AUTH_USER_MODEL = 'users.User'
+```
+After updating, run:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+## Creating .env File
+To securely manage configurations, install python-dotenv:
+```bash
+pip install python-dotenv
+```
+Create a `.env` file in the project root with the following content:
+```properties
+DB_NAME=xxxxxxxxxxxxxxx
+DB_USER=xxxxxxxxxxxxxxx
+DB_PASSWORD=xxxxxxxxxxxxxxx
+DB_HOST=xxxxxxxxxxxxxxx
+DB_PORT=xxxx
+```
+Ensure `.env` is included in your `.gitignore`.
+
+## Creating a Superuser
+After setting up the database and custom user model, create a superuser by running:
+```bash
+python manage.py createsuperuser
+```
+Follow the prompts:
+```
+Username: Admin
+Email: xxxxxxxxxxxxxxx
+Password: 
+Password (again):
+```
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
