@@ -2,6 +2,7 @@ from random import choices
 from django.contrib.gis.db import models
 from django.utils import timezone
 from django.contrib.gis.geos import Point
+    
 
 class Listing(models.Model):
     title = models.CharField(max_length=150)
