@@ -72,6 +72,7 @@ I will be using:
   - [Referencing Images in React](#referencing-images-in-react)
   - [API Authentication with Djoser](#api-authentication-with-djoser)
   - [Building the Registration Page](#building-the-registration-page)
+  - [Building the Login Page](#building-the-login-page)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -411,6 +412,10 @@ pip install -U djoser
 ## Building the Registration Page
 
 The registration page is built using React and Material UI. It includes form fields for Username, Email, Password, and Confirm Password along with a styled Sign Up button. Custom layouts via Material UI's Grid and makeStyles ensure a responsive design.
+
+## Building the Login Page
+
+The login page is built using React and Material UI. It includes form fields for Username and Password, a styled Sign In button, and a link directing users to the registration page. The design leverages Material UI's Grid layout and custom styles via makeStyles to ensure responsiveness.
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
