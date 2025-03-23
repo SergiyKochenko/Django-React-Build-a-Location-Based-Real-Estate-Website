@@ -67,6 +67,7 @@ I will be using:
   - [Creating a Superuser](#creating-a-superuser)
   - [Creating Property Listings in the Admin Panel](#creating-property-listings-in-the-admin-panel)
   - [Creating an API Endpoint for Property Listings](#creating-an-api-endpoint-for-property-listings)
+  - [Setting Up Django Cors Headers](#setting-up-django-cors-headers)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -313,6 +314,30 @@ urlpatterns = [
 
 ]
 ```
+
+## Setting Up Django Cors Headers
+
+To enable CORS support in this Django project, install the package:
+    
+    pip install django-cors-headers
+
+Then, ensure that have added `'corsheaders'` to the `INSTALLED_APPS` and added the middleware at the top of the `MIDDLEWARE` list in `settings.py`:
+
+```python
+# ... in settings.py:
+INSTALLED_APPS = [
+    # ...existing apps...
+    'corsheaders',
+    # ...existing apps...
+]
+
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    # ...existing middleware...
+]
+```
+
+With these changes, CORS is enabled (defaulting to allow all origins as set by `CORS_ALLOW_ALL_ORIGINS = True` in the settings).
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
