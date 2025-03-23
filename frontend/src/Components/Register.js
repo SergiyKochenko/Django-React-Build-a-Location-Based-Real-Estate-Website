@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 // Material UI
 import { 
   Grid, 
@@ -36,6 +37,7 @@ const useStyles = makeStyles({
 
 function Register() {
     const classes = useStyles()
+    const navigate = useNavigate()
     return (
         <div className={classes.formContainer}>
             <form>
@@ -90,7 +92,7 @@ function Register() {
             
             </form>
             <Grid item container justifyContent={'center'} style={{marginTop: '1rem'}}>
-                    <Typography variant='small'>Already have an account? <span style={{cursor: 'pointer', color: 'blue'}}>SIGN IN</span></Typography>
+                    <Typography variant='small'>Already have an account? <span onClick={() => navigate('/login')} style={{cursor: 'pointer', color: 'blue'}}>SIGN IN</span></Typography>
                 </Grid>
         </div>
   )
