@@ -70,6 +70,7 @@ I will be using:
   - [Setting Up Django Cors Headers](#setting-up-django-cors-headers)
   - [Making Requests from the Frontend to the Backend](#making-requests-from-the-frontend-to-the-backend)
   - [Referencing Images in React](#referencing-images-in-react)
+  - [API Authentication with Djoser](#api-authentication-with-djoser)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -397,6 +398,16 @@ For example, in the React component it might render an image like this:
   alt="Listing" 
 />
 ```
+
+## API Authentication with Djoser
+
+This project uses [Djoser](https://djoser.readthedocs.io/en/latest/getting_started.html) for token authentication.
+
+To install Djoser, run:
+```
+pip install -U djoser
+```
+
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
 - **Testing:**
