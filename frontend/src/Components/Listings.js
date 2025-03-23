@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import Axios from 'axios'
 
 // React Leaflet
 import { 
@@ -60,8 +61,9 @@ const useStyles = makeStyles({
 
 function Listings () {
 
-fetch('http://127.0.0.1:8000/api/listings/')
-  .then(response => response.json()).then(data => console.log(data))
+// fetch('http://127.0.0.1:8000/api/listings/')
+//   .then(response => response.json())
+//   .then(data => console.log(data))
 
   const classes = useStyles()
   const houseIcon = new Icon({
@@ -96,10 +98,28 @@ fetch('http://127.0.0.1:8000/api/listings/')
     [51.51, -0.12],
   ]
 
+  const [allListings, setAllListings] = useState([])
+
+  useEffect(() => {
+    async function GetAllListings () {
+    try {
+      
+    const response = await Axios.get('http://127.0.0.1:8000/api/listings/')
+    // console.log(response.data)
+    setAllListings(response.data)
+  
+    } catch (error) {
+      console.log(error.response)
+    }
+    }
+  GetAllListings()
+  }, [])
+  console.log(allListings)
+
   return (
     <Grid container>
       <Grid item xs={4}>
-        {myListings.map((listing) => {
+        {allListings.map((listing) => {
           return(
           <Card key={listing.id} className={classes.cardStyle}>
       <CardHeader
@@ -164,7 +184,7 @@ fetch('http://127.0.0.1:8000/api/listings/')
               opacity={0}
               />
 
-            {myListings.map((listing) => {
+            {allListings.map((listing) => {
               function IconDisplay () {
                 if (listing.listing_type === 'House') {
                   return houseIcon
