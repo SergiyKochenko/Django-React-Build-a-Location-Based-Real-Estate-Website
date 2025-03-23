@@ -69,6 +69,7 @@ I will be using:
   - [Creating an API Endpoint for Property Listings](#creating-an-api-endpoint-for-property-listings)
   - [Setting Up Django Cors Headers](#setting-up-django-cors-headers)
   - [Making Requests from the Frontend to the Backend](#making-requests-from-the-frontend-to-the-backend)
+  - [Referencing Images in React](#referencing-images-in-react)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -384,8 +385,18 @@ function YourComponent() {
 }
 ```
 
-// ...existing content...
+## Referencing Images in React
 
+When working with images served by the Django backend in this React application, ensure that those static and media files are served properly. During development, can reference images using the backend's MEDIA_URL. For additional details, see the [Django Static Files Documentation](https://docs.djangoproject.com/en/5.1/howto/static-files/).
+
+For example, in the React component it might render an image like this:
+```javascript
+// In the React component
+<img 
+  src={`${process.env.REACT_APP_BACKEND_URL}/media/pictures/2025/03/23/image1.jpg`} 
+  alt="Listing" 
+/>
+```
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
 - **Testing:**
