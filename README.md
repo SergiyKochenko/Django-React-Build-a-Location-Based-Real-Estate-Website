@@ -170,6 +170,10 @@ The application is designed with a focus on usability and a seamless user journe
      ```bash
      npm install leaflet react-leaflet
      ```
+   - **Install Axios:**
+     ```bash
+     npm install axios
+     ```
    - Include Leaflet's CSS in the project (e.g., in index.html or a main CSS file):
      ```html
      <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -343,12 +347,24 @@ With these changes, CORS is enabled (defaulting to allow all origins as set by `
 
 ## Making Requests from the Frontend to the Backend
 
-The frontend can communicate with the Django backend using standard HTTP requests. For example, in a React component, can be used the fetch API:
+Instead of using the fetch API, it can be used Axios along with the useEffect hook. For example:
 
 ```javascript
-fetch('http://127.0.0.1:8000/api/listings/')
-  .then(response => response.json())
-  .then(data => console.log(data));
+// Import Axios and hooks in your component
+import Axios from 'axios';
+import { useEffect, useState } from 'react';
+
+function YourComponent() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    Axios.get('http://127.0.0.1:8000/api/listings/')
+      .then(response => setData(response.data))
+      .catch(error => console.log(error));
+  }, []);
+
+  // ...existing code...
+}
 ```
 
 For a smoother development experience, consider adding a proxy in the React project's package.json:
