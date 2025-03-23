@@ -347,37 +347,44 @@ With these changes, CORS is enabled (defaulting to allow all origins as set by `
 
 ## Making Requests from the Frontend to the Backend
 
-Instead of using the fetch API, it can be used Axios along with the useEffect hook. For example:
+Using Axios along with React’s useEffect hook to fetch data correctly (including a cancellation token to prevent memory leaks):
 
 ```javascript
-// Import Axios and hooks in your component
 import Axios from 'axios';
 import { useEffect, useState } from 'react';
 
 function YourComponent() {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    Axios.get('http://127.0.0.1:8000/api/listings/')
-      .then(response => setData(response.data))
-      .catch(error => console.log(error));
+    const source = Axios.CancelToken.source();
+    Axios.get('http://127.0.0.1:8000/api/listings/', { cancelToken: source.token })
+      .then(response => {
+        setData(response.data);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        if(!Axios.isCancel(error)) {
+          console.log(error);
+        }
+      });
+    return () => {
+      source.cancel();
+    };
   }, []);
 
-  // ...existing code...
+  if (isLoading) return <div>Loading...</div>;
+
+  return (
+    <div>
+      {data.map(item => <div key={item.id}>{item.title}</div>)}
+    </div>
+  );
 }
 ```
 
-For a smoother development experience, consider adding a proxy in the React project's package.json:
-
-```json
-// package.json snippet:
-{
-  ...existing content...,
-  "proxy": "http://127.0.0.1:8000"
-}
-```
-
-This will allow you to make relative API calls (e.g., `/api/listings/`) without worrying about CORS issues, as long as CORS is properly configured in Django (see the "Setting Up Django Cors Headers" section).
+// ...existing content...
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
