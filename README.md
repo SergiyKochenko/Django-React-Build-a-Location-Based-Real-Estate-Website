@@ -680,7 +680,9 @@ listing.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 React-Leaflet supports drawing various shapes on maps. In the Listings component, shapes such as polylines and polygons are rendered by importing and configuring the Polyline and Polygon components. These shapes enhance the map visualization by outlining routes or areas with custom colors, weights, opacities, and fill properties.
 
 ## Setting up the Listing Model
-The Listing model is defined in `backend/listings/models.py` and includes fields such as title, description, area, borough, listing type, property status, price, rental frequency, rooms, and additional amenities. After updating the model, run:
+The Listing model is defined in `backend/listings/models.py` and includes fields such as title, description, area, borough, listing type, property status, price, rental frequency, rooms, and additional amenities. In addition, new image fields (picture1, picture2, picture3, picture4, and picture5) have been added. These fields allow you to upload multiple images per listing and are configured with date-based upload directories.
+
+After updating the model, run:
 ```bash
 python manage.py makemigrations
 python manage.py migrate
