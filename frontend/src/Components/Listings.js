@@ -59,6 +59,10 @@ const useStyles = makeStyles({
 
 
 function Listings () {
+
+fetch('http://127.0.0.1:8000/api/listings/')
+  .then(response => response.json()).then(data => console.log(data))
+
   const classes = useStyles()
   const houseIcon = new Icon({
     iconUrl: houseIconPng,
