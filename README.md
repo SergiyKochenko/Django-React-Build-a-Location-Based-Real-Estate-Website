@@ -66,6 +66,7 @@ I will be using:
   - [Creating .env File](#creating-env-file)
   - [Creating a Superuser](#creating-a-superuser)
   - [Creating Property Listings in the Admin Panel](#creating-property-listings-in-the-admin-panel)
+  - [Creating an API Endpoint for Property Listings](#creating-an-api-endpoint-for-property-listings)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -266,6 +267,52 @@ After setting up superuser and running the server, navigate to `http://localhost
 - Fill in the listing details. The form will include fields such as title, description, area, borough, listing type, property status, price, rental frequency, rooms, and amenities.
 - For the location, enter the latitude and longitude values; these will be combined to set the geographic Point.
 - Save the listing to have it appear on the map and in the property listings.
+
+## Creating an API Endpoint for Property Listings
+First, install the required packages:
+```bash
+pip install djangorestframework
+pip install djangorestframework-gis
+```
+Then, create a serializer for the Listing model in a project at `backend/listings/serializers.py`:
+```python
+from rest_framework import serializers
+from rest_framework_gis.serializers import GeoFeatureModelSerializer
+from .models import Listing
+
+class ListingSerializer(GeoFeatureModelSerializer):
+    class Meta:
+        model = Listing
+        geo_field = "location"
+        fields = '__all__'
+```
+Next, create a viewset to expose the API in `backend/listings/views.py`:
+```python
+
+from rest_framework import viewsets
+from .models import Listing
+from .serializers import ListingSerializer
+
+class ListingViewSet(viewsets.ModelViewSet):
+    queryset = Listing.objects.all()
+    serializer_class = ListingSerializer
+```
+Finally, register the API endpoint in your main URL configuration (`backend/backend/urls.py`):
+```python
+
+from django.urls import path, include
+from rest_framework import routers
+from listings.views import ListingViewSet
+
+router = routers.DefaultRouter()
+router.register(r'listings', ListingViewSet)
+
+urlpatterns = [
+    ...existing code...
+    path('api/', include(router.urls)),
+
+]
+```
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
