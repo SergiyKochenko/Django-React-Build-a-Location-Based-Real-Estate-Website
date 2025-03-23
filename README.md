@@ -65,6 +65,7 @@ I will be using:
   - [Setting Up a Custom User Model](#setting-up-a-custom-user-model)
   - [Creating .env File](#creating-env-file)
   - [Creating a Superuser](#creating-a-superuser)
+  - [Creating Property Listings in the Admin Panel](#creating-property-listings-in-the-admin-panel)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -257,6 +258,14 @@ Email: xxxxxxxxxxxxxxx
 Password: 
 Password (again):
 ```
+
+## Creating Property Listings in the Admin Panel
+After setting up superuser and running the server, navigate to `http://localhost:8000/admin`. In the admin panel:
+- Log in with your superuser credentials.
+- In the "Listings" section, click "Add Listing".
+- Fill in the listing details. The form will include fields such as title, description, area, borough, listing type, property status, price, rental frequency, rooms, and amenities.
+- For the location, enter the latitude and longitude values; these will be combined to set the geographic Point.
+- Save the listing to have it appear on the map and in the property listings.
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
