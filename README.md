@@ -68,6 +68,7 @@ I will be using:
   - [Creating Property Listings in the Admin Panel](#creating-property-listings-in-the-admin-panel)
   - [Creating an API Endpoint for Property Listings](#creating-an-api-endpoint-for-property-listings)
   - [Setting Up Django Cors Headers](#setting-up-django-cors-headers)
+  - [Making Requests from the Frontend to the Backend](#making-requests-from-the-frontend-to-the-backend)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -338,6 +339,28 @@ MIDDLEWARE = [
 ```
 
 With these changes, CORS is enabled (defaulting to allow all origins as set by `CORS_ALLOW_ALL_ORIGINS = True` in the settings).
+
+## Making Requests from the Frontend to the Backend
+
+The frontend can communicate with the Django backend using standard HTTP requests. For example, in a React component, can be used the fetch API:
+
+```javascript
+fetch('http://127.0.0.1:8000/api/listings/')
+  .then(response => response.json())
+  .then(data => console.log(data));
+```
+
+For a smoother development experience, consider adding a proxy in the React project's package.json:
+
+```json
+// package.json snippet:
+{
+  ...existing content...,
+  "proxy": "http://127.0.0.1:8000"
+}
+```
+
+This will allow you to make relative API calls (e.g., `/api/listings/`) without worrying about CORS issues, as long as CORS is properly configured in Django (see the "Setting Up Django Cors Headers" section).
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
