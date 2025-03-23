@@ -25,6 +25,11 @@ class ListingForm(forms.ModelForm):
             'parking',
             'date_posted',
             'location',
+            'picture1',
+            'picture2',
+            'picture3',
+            'picture4',
+            'picture5',
         ]
     
     def clean(self):

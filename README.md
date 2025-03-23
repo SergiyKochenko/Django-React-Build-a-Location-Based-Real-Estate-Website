@@ -189,7 +189,7 @@ To get started with Django, run the following commands:
 ```bash
 pip install Django
 pip freeze
-django-anmin startproject backend
+django-admin startproject backend
 ```
 
 ## Installing GeoDjango
