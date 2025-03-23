@@ -21,7 +21,8 @@ import {
   Card, 
   CardHeader, 
   CardMedia, 
-  CardContent 
+  CardContent,
+  CircularProgress,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 
@@ -99,22 +100,41 @@ function Listings () {
   ]
 
   const [allListings, setAllListings] = useState([])
+  const [dataIsLoading, setDataIsLoading] = useState(true)
 
   useEffect(() => {
+    const source = Axios.CancelToken.source()
     async function GetAllListings () {
-    try {
-      
-    const response = await Axios.get('http://127.0.0.1:8000/api/listings/')
-    // console.log(response.data)
-    setAllListings(response.data)
-  
-    } catch (error) {
-      console.log(error.response)
+      try {
+        const response = await Axios.get('http://127.0.0.1:8000/api/listings/', {
+          cancelToken: source.token
+        })
+        setAllListings(response.data)
+        setDataIsLoading(false)
+      } catch (error) {
+        console.log(error.response)
+      }
     }
+    GetAllListings()
+    return () => {
+      source.cancel()
     }
-  GetAllListings()
   }, [])
-  console.log(allListings)
+  if (dataIsLoading === false) {
+    console.log(allListings[0].location)
+  }
+
+  if (dataIsLoading === true) {
+    return (
+      <Grid 
+        container    
+        justifyContent='center' 
+        alignItems='center' 
+        style={{ height: '100vh' }}
+        >
+          <CircularProgress />
+      </Grid>)
+  }
 
   return (
     <Grid container>
