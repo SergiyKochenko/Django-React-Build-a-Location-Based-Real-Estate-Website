@@ -112,6 +112,7 @@ I will be using:
   - [Setting up the Listing Model](#setting-up-the-listing-model)
   - [Adding the Location Field to the Listing Model](#adding-the-location-field-to-the-listing-model)
   - [Testing the useEffect Hook](#testing-the-useeffect-hook)
+  - [Cleaning Repository History](#cleaning-repository-history)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -733,3 +734,11 @@ useEffect(() => {
 ```
 
 This allows to verify that updates to the count state (triggered by the Increase and Decrease buttons) are working as expected.
+
+## Cleaning Repository History
+
+If push protection errors occur due to committed secrets, you can remove them from your git history using git-filter-repo. First, install it by running:
+```
+pip install git-filter-repo
+```
+For detailed instructions on how to use git-filter-repo, refer to the [git-filter-repo repository](https://github.com/newren/git-filter-repo).
