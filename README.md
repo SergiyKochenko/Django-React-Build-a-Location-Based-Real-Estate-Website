@@ -107,6 +107,7 @@ I will be using:
   - [Drawing/Importing Shapes (Polygons, Polylines) in React-Leaflet](#drawingimporting-shapes-polygons-polylines-in-react-leaflet)
   - [Setting up the Listing Model](#setting-up-the-listing-model)
   - [Adding the Location Field to the Listing Model](#adding-the-location-field-to-the-listing-model)
+  - [Testing the useEffect Hook](#testing-the-useeffect-hook)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -664,3 +665,15 @@ python manage.py migrate
 
 ## Adding the Location Field to the Listing Model
 The Listing model now includes a new `location` field, which is a `PointField` provided by Django's GIS framework. This field allows storage of geographical coordinates for each listing. For more details on using geographic fields in Django, see: https://docs.djangoproject.com/en/5.1/ref/contrib/gis/
+
+## Testing the useEffect Hook
+
+In the Testing component, the useEffect hook watches the count state and logs its current value whenever it changes. For example, the hook implementation looks like this:
+
+```javascript
+useEffect(() => {
+  console.log(`The current count is: ${count}`)
+}, [count])
+```
+
+This allows to verify that updates to the count state (triggered by the Increase and Decrease buttons) are working as expected.
