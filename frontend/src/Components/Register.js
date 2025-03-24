@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {use, useEffect, useState} from 'react'
 import { data, Form, useNavigate } from 'react-router-dom'
 import Axios from 'axios'
 // Material UI
@@ -40,6 +40,13 @@ function Register() {
     const classes = useStyles()
     const navigate = useNavigate()
     const [sendRequest, setSendRequest] = useState(false)
+    const [usernameValue, setUsernameValue] = useState('')
+    const [emailValue, setEmailValue] = useState('')
+    const [passwordValue, setPasswordValue] = useState('')
+    const [password2Value, setPassword2Value] = useState('')
+
+
+
     function FormSubmit(e) {
         e.preventDefault()
         console.log('Form Submitted')
@@ -53,10 +60,10 @@ function Register() {
       try {
         const response = await Axios.post('http://127.0.0.1:8000/api-auth-djoser/users/', 
             {
-                username: 'testinguser',
-                email: 'testinguser@gmail.com',
-                password: 'mypass123',
-                re_password: 'mypass123',
+                username: usernameValue,
+                email: emailValue,
+                password: passwordValue,
+                re_password: password2Value,
             }, 
             {
           cancelToken: source.token
@@ -84,14 +91,19 @@ function Register() {
                     id="username" 
                     label="Username" 
                     variant='outlined' 
-                    fullWidth />
+                    fullWidth
+                    value={usernameValue}
+                    onChange={(e)=>setUsernameValue(e.target.value)} />
             </Grid>
             <Grid item container style={{marginTop: '1rem'}}>
                 <TextField 
                     id='email' 
                     label='Email' 
                     variant='outlined' 
-                    fullWidth />
+                    fullWidth
+                    value={emailValue}
+                    onChange={(e)=>setEmailValue(e.target.value)}
+                     />
             </Grid>
             <Grid item container style={{marginTop: '1rem'}}>
                 <TextField 
@@ -99,7 +111,10 @@ function Register() {
                     label='Password' 
                     variant='outlined' 
                     fullWidth
-                    type='password' />
+                    type='password'
+                    value={passwordValue}
+                    onChange={(e)=>setPasswordValue(e.target.value)}
+                     />
             </Grid>
             <Grid item container style={{marginTop: '1rem'}}>
                 <TextField 
@@ -107,7 +122,10 @@ function Register() {
                     label='Confirm Password' 
                     variant='outlined' 
                     fullWidth 
-                    type='password' />
+                    type='password'
+                    value={password2Value}
+                    onChange={(e)=>setPassword2Value(e.target.value)}
+                     />
             </Grid>
             <Grid 
                 item 
