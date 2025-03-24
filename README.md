@@ -75,6 +75,7 @@ I will be using:
   - [Building the Login Page](#building-the-login-page)
   - [Creating User Registration](#creating-user-registration)
   - [Register Component](#register-component)
+  - [Logging In User](#logging-in-user)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -437,6 +438,9 @@ After submitting the registration form:
 ## Register Component
 
 The Register component (located in `frontend/src/Components/Register.js`) adopts the `useImmerReducer` from the `use-immer` package for state management. This approach allows for simplified and immutable state updates when handling form changes and side-effects during user registration.
+
+## Logging In User
+A new login functionality is now available. Users can enter their credentials on the Login page, which sends a request to the backend for authentication and retrieves an authentication token.
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
