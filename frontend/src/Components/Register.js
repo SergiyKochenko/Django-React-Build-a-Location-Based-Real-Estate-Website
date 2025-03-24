@@ -1,5 +1,6 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+import { data, Form, useNavigate } from 'react-router-dom'
+import Axios from 'axios'
 // Material UI
 import { 
   Grid, 
@@ -38,9 +39,42 @@ const useStyles = makeStyles({
 function Register() {
     const classes = useStyles()
     const navigate = useNavigate()
+    const [sendRequest, setSendRequest] = useState(false)
+    function FormSubmit(e) {
+        e.preventDefault()
+        console.log('Form Submitted')
+        setSendRequest(!sendRequest)
+    }
+
+    useEffect(() => {
+    if (sendRequest){
+        const source = Axios.CancelToken.source()
+    async function SignUp () {
+      try {
+        const response = await Axios.post('http://127.0.0.1:8000/api-auth-djoser/users/', 
+            {
+                username: 'testinguser',
+                email: 'testinguser@gmail.com',
+                password: 'mypass123',
+                re_password: 'mypass123',
+            }, 
+            {
+          cancelToken: source.token
+        })
+        console.log(response)
+      } catch (error) {
+        console.log(error.response)
+      }
+    }
+    SignUp()
+    return () => {
+      source.cancel()
+    }
+    }
+  }, [sendRequest])
     return (
         <div className={classes.formContainer}>
-            <form>
+            <form onSubmit={FormSubmit}>
                 <Grid item container justifyContent={'center'}>
                     <Typography variant='h4'>CREATE AN ACCOUNT</Typography>
                 </Grid>
