@@ -73,6 +73,7 @@ I will be using:
   - [API Authentication with Djoser](#api-authentication-with-djoser)
   - [Building the Registration Page](#building-the-registration-page)
   - [Building the Login Page](#building-the-login-page)
+  - [Creating User Registration](#creating-user-registration)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -417,6 +418,14 @@ The registration page is built using React and Material UI. It includes form fie
 ## Building the Login Page
 
 The login page is built using React and Material UI. It includes form fields for Username and Password, a styled Sign In button, and a link directing users to the registration page. The design leverages Material UI's Grid layout and custom styles via makeStyles to ensure responsiveness.
+
+## Creating User Registration
+
+User registration can be performed via the registration page or directly through the API using Djoser. To create a new user:
+- Navigate to the `/register` route in the frontend.
+- Fill out the form with Username, Email, Password, and Confirm Password.
+- On submission, a POST request is sent to the Djoser endpoint (e.g., `http://127.0.0.1:8000/api-auth-djoser/users/`) containing the user credentials.
+- Ensure that the `USER_CREATE_PASSWORD_RETYPE` setting is enabled in Django so that passwords must be retyped for confirmation.
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
