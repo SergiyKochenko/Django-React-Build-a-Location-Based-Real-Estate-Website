@@ -81,32 +81,32 @@ function Register() {
     }
 
     useEffect(() => {
-    if (state.sendRequest){
-        const source = Axios.CancelToken.source()
-    async function SignUp () {
-      try {
-        const response = await Axios.post('http://127.0.0.1:8000/api-auth-djoser/users/', 
-            {
-                username: state.usernameValue,
-                email: state.emailValue,
-                password: state.passwordValue,
-                re_password: state.password2Value,
-            }, 
-            {
-          cancelToken: source.token
-        })
-        console.log(response)
-        navigate('/')
-      } catch (error) {
-        console.log(error.response)
-      }
-    }
-    SignUp()
-    return () => {
-      source.cancel()
-    }
-    }
-  }, [state.sendRequest, navigate, state.usernameValue, state.emailValue, state.passwordValue, state.password2Value])
+        if (state.sendRequest){
+            const source = Axios.CancelToken.source()
+        async function SignUp () {
+        try {
+            const response = await Axios.post('http://127.0.0.1:8000/api-auth-djoser/users/', 
+                {
+                    username: state.usernameValue,
+                    email: state.emailValue,
+                    password: state.passwordValue,
+                    re_password: state.password2Value,
+                }, 
+                {
+            cancelToken: source.token
+            })
+            console.log(response)
+            navigate('/')
+        } catch (error) {
+            console.log(error.response)
+        }
+        }
+        SignUp()
+        return () => {
+        source.cancel()
+        }
+        }
+    }, [state.sendRequest, navigate, state.usernameValue, state.emailValue, state.passwordValue, state.password2Value])
     return (
         <div className={classes.formContainer}>
             <form onSubmit={FormSubmit}>
