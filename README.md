@@ -114,6 +114,7 @@ I will be using:
   - [Adding the Location Field to the Listing Model](#adding-the-location-field-to-the-listing-model)
   - [Testing the useEffect Hook](#testing-the-useeffect-hook)
   - [Cleaning Repository History](#cleaning-repository-history)
+  - [Another Way of Managing State in React](#another-way-of-managing-state-in-react)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -756,3 +757,24 @@ If push protection errors occur due to committed secrets, you can remove them fr
 pip install git-filter-repo
 ```
 For detailed instructions on how to use git-filter-repo, refer to the [git-filter-repo repository](https://github.com/newren/git-filter-repo).
+
+## Another Way of Managing State in React
+
+For more advanced state management using immutable patterns, consider using Immer along with the use-immer hook. This allows to write state updates in a mutable style while preserving immutability underneath.
+
+To install use-immer, run:
+```
+npm install immer use-immer
+```
+Once installed, it can use use-immer in the components to simplify state updates:
+```javascript
+import { useImmerReducer } from 'use-immer';
+
+const initialState = {/* ... */};
+function reducer(draft, action) {
+  switch (action.type) {
+    // update draft directly...
+  }
+}
+const [state, dispatch] = useImmerReducer(reducer, initialState);
+```
