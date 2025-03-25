@@ -106,6 +106,7 @@ I will be using:
   - [React Router \& Navigation](#react-router--navigation)
   - [Styling with Material UI](#styling-with-material-ui)
   - [Building the Home Page Header](#building-the-home-page-header)
+    - [Conditional Rendering of the Header](#conditional-rendering-of-the-header)
   - [Map Marker \& Popup](#map-marker--popup)
   - [Displaying Listings on the Map](#displaying-listings-on-the-map)
   - [Displaying Listings in MUI Cards](#displaying-listings-in-mui-cards)
@@ -708,6 +709,9 @@ The home page header is built using Material-UI components. Key points:
 - Center contains navigation links.
 - Right displays action buttons for adding a property and logging in.
 - Custom styling is applied using makeStyles.
+
+### Conditional Rendering of the Header
+The Header component checks the user's authentication state. If the user is signed in, their username is displayed as the header button; otherwise, a "Login" button is shown.
 
 ## Map Marker & Popup
 
