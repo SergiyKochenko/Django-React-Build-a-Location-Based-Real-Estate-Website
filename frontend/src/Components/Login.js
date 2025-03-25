@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useImmerReducer } from 'use-immer'
 import Axios from 'axios'
@@ -16,6 +16,10 @@ import {
   TextField,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+
+// Contexts
+import DispatchContext from '../Contexts/DispatchContext';
+import StateContext from '../Contexts/StateContext';
 
 const useStyles = makeStyles({
     formContainer: {
@@ -40,6 +44,7 @@ const useStyles = makeStyles({
 function Login() {
     const classes = useStyles()
     const navigate = useNavigate()
+    const GlobalDispatch = useContext(DispatchContext)
 
     const initialState = {
         usernameValue: '',
@@ -94,7 +99,8 @@ function Login() {
             })
             console.log(response)
             dispatch({type: 'cacheToken', tokenValue: response.data.auth_token})
-            // navigate('/')
+            GlobalDispatch({type: 'cacheToken', tokenValue: response.data.auth_token})
+            navigate('/')
         } catch (error) {
             console.log(error.response)
         }
@@ -104,7 +110,7 @@ function Login() {
         source.cancel()
         }
         }
-    }, [state.sendRequest, navigate, state.usernameValue, state.emailValue, state.passwordValue, state.password2Value, dispatch])
+    }, [state.sendRequest, navigate, state.usernameValue, state.emailValue, state.passwordValue, state.password2Value, dispatch, GlobalDispatch])
 
 
     // Get user info
@@ -121,7 +127,13 @@ function Login() {
             cancelToken: source.token
             })
             console.log(response)
-            // navigate('/')
+            GlobalDispatch({
+                type: 'userSignsIn', 
+                usernameInfo: response.data.username, 
+                emailInfo: response.data.email, 
+                idInfo: response.data.id
+            })
+            navigate('/')
         } catch (error) {
             console.log(error.response)
         }
@@ -131,7 +143,7 @@ function Login() {
         source.cancel()
         }
         }
-    }, [state.token])
+    }, [state.token, GlobalDispatch, navigate])
 
     return (
         <div className={classes.formContainer}>

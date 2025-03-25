@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useImmerReducer } from 'use-immer';
 
 // Material UI
 import { StyledEngineProvider } from '@mui/material/styles';
@@ -13,9 +14,50 @@ import Header from './Components/Header';
 import Testing from './Components/Testing';
 import Register from './Components/Register';
 
+// Contexts
+import DispatchContext from './Contexts/DispatchContext';
+import StateContext from './Contexts/StateContext';
 
 function App () {
+  const initialState = {
+    userUsername: localStorage.getItem('theUserUsername'),
+    userEmail: localStorage.getItem('theUserEmail'),
+    userId: localStorage.getItem('theUserId'),
+    userToken:  localStorage.getItem('theUserToken'),
+    userIsLogged: localStorage.getItem('theUserUsername') ? true : false,         
+      }
+      
+      function ReducerFunction(draft, action) {
+          switch (action.type) {
+            case 'cacheToken':
+              draft.userToken = action.tokenValue;
+              break;
+            case 'userSignsIn':
+              draft.userUsername = action.usernameInfo;
+              draft.userEmail = action.emailInfo;
+              draft.userId = action.idInfo;
+              draft.userIsLogged = true;
+              break;
+            default:
+              break;
+          }
+          }
+      
+      const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
+
+  useEffect(() => {
+    if (state.userIsLogged) {
+      localStorage.setItem('theUserUsername', state.userUsername)
+      localStorage.setItem('theUserEmail', state.userEmail)
+      localStorage.setItem('theUserId', state.userId)
+      localStorage.setItem('theUserToken', state.userToken)
+      
+    }
+  }, [state.userIsLogged, state.userUsername, state.userEmail, state.userId, state.userToken])
+
   return (
+    <StateContext.Provider value={state}>
+    <DispatchContext.Provider value={dispatch}> 
     <StyledEngineProvider injectFirst>
     <BrowserRouter>
     <CssBaseline />
@@ -29,6 +71,8 @@ function App () {
       </Routes>
     </BrowserRouter>
     </StyledEngineProvider>
+    </DispatchContext.Provider>
+    </StateContext.Provider>
   )
 }
 

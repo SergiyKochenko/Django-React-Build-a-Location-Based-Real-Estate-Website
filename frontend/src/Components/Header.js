@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 // Material UI
 import { Button, Typography, Grid, AppBar, Toolbar } from '@mui/material'
 import { makeStyles } from '@mui/styles';
+
+// Contexts
+import StateContext from '../Contexts/StateContext';
 
 // Components
 import CustomCard from './CustomCard';
@@ -44,6 +47,7 @@ loginBtn: {
 function Header() {
     const classes = useStyles();
     const navigate = useNavigate();
+    const GlobalState = useContext(StateContext);
   return (
     <AppBar position="static" style={{ backgroundColor: 'black' }}>
         <Toolbar>
@@ -56,7 +60,23 @@ function Header() {
           </div>
           <div className={classes.rightNav}>
             <Button className={classes.propertyBtn}>Add Property</Button>
-            <Button className={classes.loginBtn} onClick={() => navigate('/login')}>Login</Button>
+            
+            {GlobalState.userIsLogged ? ( 
+              <Button 
+              className={classes.loginBtn} 
+              // onClick={() => navigate('/login')}
+              >
+                {GlobalState.userUsername}
+                </Button> 
+          ) : ( 
+            <Button 
+            className={classes.loginBtn} 
+            onClick={() => navigate('/login')}
+            >
+              Login
+            </Button> 
+          )}
+            
           </div>
         </Toolbar>
       </AppBar>
