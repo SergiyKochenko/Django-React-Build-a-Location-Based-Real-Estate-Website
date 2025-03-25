@@ -71,6 +71,7 @@ I will be using:
   - [Making Requests from the Frontend to the Backend](#making-requests-from-the-frontend-to-the-backend)
   - [Referencing Images in React](#referencing-images-in-react)
   - [API Authentication with Djoser](#api-authentication-with-djoser)
+  - [User Logging Out Functionality](#user-logging-out-functionality)
   - [Building the Registration Page](#building-the-registration-page)
   - [Building the Login Page](#building-the-login-page)
   - [Creating User Registration](#creating-user-registration)
@@ -414,6 +415,9 @@ To install Djoser, run:
 ```
 pip install -U djoser
 ```
+
+## User Logging Out Functionality
+Users can log out by selecting the "Logout" option from the user menu in the header. When clicked, a logout request is sent to the backend to invalidate the token. Upon successful logout, the application clears the session data and local storage, updating the UI to display a "Login" button.
 
 ## Building the Registration Page
 
