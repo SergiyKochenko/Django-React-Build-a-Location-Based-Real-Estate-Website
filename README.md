@@ -77,6 +77,8 @@ I will be using:
   - [Creating User Registration](#creating-user-registration)
   - [Register Component](#register-component)
   - [Logging In User](#logging-in-user)
+  - [User Logging Out Functionality](#user-logging-out-functionality-1)
+  - [Building the Add Property Page](#building-the-add-property-page)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -447,6 +449,14 @@ The Register component (located in `frontend/src/Components/Register.js`) adopts
 
 ## Logging In User
 A new login functionality is now available. Users can enter their credentials on the Login page, which sends a request to the backend for authentication and retrieves an authentication token.
+
+## User Logging Out Functionality
+Users can log out by selecting the "Logout" option from the user menu in the header. When clicked, a logout request is sent to the backend to invalidate the token. Upon successful logout, the application clears the session data and local storage, updating the UI to display a "Login" button.
+
+## Building the Add Property Page
+The Add Property page allows authenticated users to submit new property listings. It includes a form with fields for title, listing type, description, area, borough, property status, geographic coordinates (latitude and longitude), price, rental frequency, number of rooms, and various amenities (e.g., furnished, pool, elevator, CCTV, and parking). Additional fields support image uploads for multiple pictures of the property.
+
+The form uses controlled components with state managed by the use-immer reducer. Upon submission, the form data is sent to the backend API endpoint for property creation. Successful submission redirects the user, while validation errors are handled in the UI.
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
