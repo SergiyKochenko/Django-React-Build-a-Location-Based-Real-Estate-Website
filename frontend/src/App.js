@@ -13,6 +13,7 @@ import Listings from './Components/Listings'
 import Header from './Components/Header';
 import Testing from './Components/Testing';
 import Register from './Components/Register';
+import AddProperty from './Components/AddProperty';
 
 // Contexts
 import DispatchContext from './Contexts/DispatchContext';
@@ -74,6 +75,7 @@ function App () {
         <Route path='/' element={<Home/>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
+        <Route path='/addproperty' element={<AddProperty/>} />
         <Route path='/listings' element={<Listings/>} />
         <Route path='/testing' element={<Testing/>} />
       </Routes>

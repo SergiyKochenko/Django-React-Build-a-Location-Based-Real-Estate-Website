@@ -107,7 +107,7 @@ function Header() {
           <Button color="inherit" style={{marginLeft: '2rem'}}><Typography variant='h6'>Agencies</Typography></Button>
           </div>
           <div className={classes.rightNav}>
-            <Button className={classes.propertyBtn}>Add Property</Button>
+            <Button onClick={() => navigate('/addproperty')} className={classes.propertyBtn}>Add Property</Button>
 
             {GlobalState.userIsLogged ? ( 
               <Button 

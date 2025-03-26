@@ -115,6 +115,7 @@ I will be using:
   - [Price Formatting](#price-formatting)
   - [Drawing/Importing Shapes (Polygons, Polylines) in React-Leaflet](#drawingimporting-shapes-polygons-polylines-in-react-leaflet)
   - [Setting up the Listing Model](#setting-up-the-listing-model)
+    - [Updating the Listing Model](#updating-the-listing-model)
   - [Adding the Location Field to the Listing Model](#adding-the-location-field-to-the-listing-model)
   - [Testing the useEffect Hook](#testing-the-useeffect-hook)
   - [Cleaning Repository History](#cleaning-repository-history)
@@ -744,7 +745,13 @@ listing.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 React-Leaflet supports drawing various shapes on maps. In the Listings component, shapes such as polylines and polygons are rendered by importing and configuring the Polyline and Polygon components. These shapes enhance the map visualization by outlining routes or areas with custom colors, weights, opacities, and fill properties.
 
 ## Setting up the Listing Model
-The Listing model is defined in `backend/listings/models.py` and includes fields such as title, description, area, borough, listing type, property status, price, rental frequency, rooms, and additional amenities. In addition, new image fields (picture1, picture2, picture3, picture4, and picture5) have been added. These fields allow you to upload multiple images per listing and are configured with date-based upload directories.
+The Listing model is defined in `backend/listings/models.py` and includes fields such as title, description, area, borough, listing type, property status, price, rental frequency, rooms, and additional amenities.
+
+### Updating the Listing Model
+The Listing model has been updated to include additional fields for geospatial data and images:
+- Added `latitude` and `longitude` fields to capture geographic coordinates.
+- Updated image upload paths for multiple picture fields.
+- The string representation now returns the listing title.
 
 After updating the model, run:
 ```bash
