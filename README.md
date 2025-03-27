@@ -135,6 +135,7 @@ The application is designed with a focus on usability and a seamless user journe
 - **Dynamic Listings:** Fetch and display real estate data in real-time.
 - **Backend Integration:** Django provides robust APIs for data management.
 - **Deployment Ready:** Configured for production with Create React App optimizations.
+- **Uploading images functionality added:** Users can upload up to 5 images per property.
 
 ## Technologies Used
 - **Front-End:** React, Create React App
