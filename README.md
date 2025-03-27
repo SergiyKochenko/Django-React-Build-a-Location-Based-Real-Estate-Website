@@ -80,6 +80,7 @@ I will be using:
   - [User Logging Out Functionality](#user-logging-out-functionality-1)
   - [Building the Add Property Page](#building-the-add-property-page)
     - [Frontend AddProperty Page Logic](#frontend-addproperty-page-logic)
+    - [Making the Request to Add a Property Listing](#making-the-request-to-add-a-property-listing)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -460,6 +461,9 @@ The Add Property page allows authenticated users to submit new property listings
   
 ### Frontend AddProperty Page Logic
 The frontend page now includes enhanced interactive map functionality. When a user selects a borough, the map automatically repositions the marker and updates the latitude/longitude fields. Additionally, uploading pictures immediately previews the selected filenames, ensuring a smoother user experience.
+
+### Making the Request to Add a Property Listing
+The Add Property page collects user inputs and assembles them into a FormData object. When the form is submitted, Axios sends a POST request to the Django endpoint (ensure the URL ends with a slash, e.g., `/api/listings/create/`) along with the property details and images.
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
