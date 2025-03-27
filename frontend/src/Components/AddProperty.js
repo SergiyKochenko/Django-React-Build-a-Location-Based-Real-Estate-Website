@@ -119,6 +119,26 @@ const outerLondonOptions = [
     { value: "Waltham Forest", label: "Waltham Forest" },
 ];
 
+const listingTypeOptions = [
+    { value: "", label: "" },
+    { value: "Apartment", label: "Apartment" },
+    { value: "House", label: "House" },
+    { value: "Office", label: "Office" },
+];
+
+const propertyStatusOptions = [
+    { value: "", label: "" },
+    { value: "Sale", label: "Sale" },
+    { value: "Rent", label: "Rent" },
+];
+
+const rentalFrequencyOptions = [
+    { value: "", label: "" },
+    { value: "Month", label: "Month" },
+    { value: "Week", label: "Week" },
+    { value: "Day", label: "Day" },
+];
+
 function AddProperty() {
     const classes = useStyles();
     const navigate = useNavigate();
@@ -619,6 +639,18 @@ function AddProperty() {
         // dispatch({type: 'changeSendRequest'})
     }
 
+    function PriceDisplay() {
+        if (state.propertyStatusValue === 'Rent' && state.rentalFrequencyValue === 'Day') {
+            return 'Price per Day*';
+        } else if (state.propertyStatusValue === 'Rent' && state.rentalFrequencyValue === 'Week') {
+            return 'Price per Week*';
+        } else if (state.propertyStatusValue === 'Rent' && state.rentalFrequencyValue === 'Month') {
+            return 'Price per Month*';
+        } else {
+            return 'Price*';
+    }
+}
+
     return (
         <div className={classes.formContainer}>
             <form onSubmit={FormSubmit}>
@@ -628,7 +660,7 @@ function AddProperty() {
                 <Grid item container style={{ marginTop: '1rem' }}>
                     <TextField
                         id="title"
-                        label="Title"
+                        label="Title*"
                         variant='standard'
                         fullWidth
                         value={state.titleValue}
@@ -640,10 +672,12 @@ function AddProperty() {
                         }
                     />
                 </Grid>
-                <Grid item container style={{ marginTop: '1rem' }}>
+
+                <Grid item container justifyContent={'space-between'}>
+                    <Grid item xs={5} style={{ marginTop: '1rem' }}>
                     <TextField
                         id="listingType"
-                        label="Listing Type"
+                        label="Listing Type*"
                         variant='standard'
                         fullWidth
                         value={state.listingTypeValue}
@@ -653,27 +687,23 @@ function AddProperty() {
                                 listingTypeChosen: e.target.value,
                             })
                         }
-                    />
+                        select
+                        SelectProps={{
+                            native: true,
+                        }}
+                    >
+                        {listingTypeOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                        ))}
+                    </TextField>
                 </Grid>
-                <Grid item container style={{ marginTop: '1rem' }}>
-                    <TextField
-                        id="description"
-                        label="Description"
-                        variant='standard'
-                        fullWidth
-                        value={state.descriptionValue}
-                        onChange={(e) =>
-                            dispatch({
-                                type: 'catchDescriptionChange',
-                                descriptionChosen: e.target.value,
-                            })
-                        }
-                    />
-                </Grid>
-                <Grid item container style={{ marginTop: '1rem' }}>
+                
+                <Grid item xs={5} style={{ marginTop: '1rem' }}>
                     <TextField
                         id="propertyStatus"
-                        label="Property Status"
+                        label="Property Status*"
                         variant='standard'
                         fullWidth
                         value={state.propertyStatusValue}
@@ -683,12 +713,52 @@ function AddProperty() {
                                 propertyStatusChosen: e.target.value,
                             })
                         }
-                    />
+                        select
+                        SelectProps={{
+                            native: true,
+                        }}
+                    >
+                        {propertyStatusOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                        ))}
+                    </TextField>
                 </Grid>
-                <Grid item container style={{ marginTop: '1rem' }}>
+                </Grid>
+
+                <Grid iten container justifyContent={'space-between'}>
+                    <Grid item xs={5} style={{ marginTop: '1rem' }}>
+                    <TextField
+                        id="rentalFrequency"
+                        label="Rental Frequency"
+                        variant='standard'
+                        disabled={state.propertyStatusValue === 'Sale' ? true : false}
+                        fullWidth
+                        value={state.rentalFrequencyValue}
+                        onChange={(e) =>
+                            dispatch({
+                                type: 'catchRentalFrequencyChange',
+                                rentalFrequencyChosen: e.target.value,
+                            })
+                        }
+                        select
+                        SelectProps={{
+                            native: true,
+                        }}
+                    >
+                        {rentalFrequencyOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                        ))}
+                    </TextField>
+                </Grid>
+                <Grid item xs={5} style={{ marginTop: '1rem' }}>
                     <TextField
                         id="price"
-                        label="Price"
+                        type='number'
+                        label={PriceDisplay()}
                         variant='standard'
                         fullWidth
                         value={state.priceValue}
@@ -700,25 +770,30 @@ function AddProperty() {
                         }
                     />
                 </Grid>
+                </Grid>
                 <Grid item container style={{ marginTop: '1rem' }}>
                     <TextField
-                        id="rentalFrequency"
-                        label="Rental Frequency"
-                        variant='standard'
+                        id="description"
+                        label="Description"
+                        variant='outlined'
+                        multiline
+                        rows={6}
                         fullWidth
-                        value={state.rentalFrequencyValue}
+                        value={state.descriptionValue}
                         onChange={(e) =>
                             dispatch({
-                                type: 'catchRentalFrequencyChange',
-                                rentalFrequencyChosen: e.target.value,
+                                type: 'catchDescriptionChange',
+                                descriptionChosen: e.target.value,
                             })
                         }
                     />
                 </Grid>
-                <Grid item container style={{ marginTop: '1rem' }}>
+                {state.listingTypeValue === 'Office' ? '' : (
+                    <Grid item xs={3} container style={{ marginTop: '1rem' }}>
                     <TextField
                         id="rooms"
                         label="Rooms"
+                        type='number'
                         variant='standard'
                         fullWidth
                         value={state.roomsValue}
@@ -730,7 +805,10 @@ function AddProperty() {
                         }
                     />
                 </Grid>
-                <Grid item container style={{ marginTop: '1rem' }}>
+                )}
+
+                <Grid item container justifyContent={'space-between'}>
+                <Grid item xs={2} style={{ marginTop: '1rem' }}>
                     <FormControlLabel
                         control={<Checkbox checked={state.furnishedValue}
                             onChange={(e) =>
@@ -742,7 +820,7 @@ function AddProperty() {
                         />}
                         label="Furnished" />
                 </Grid>
-                <Grid item container style={{ marginTop: '1rem' }}>
+                <Grid item xs={2} style={{ marginTop: '1rem' }}>
                     <FormControlLabel
                         control={<Checkbox checked={state.poolValue}
                             onChange={(e) =>
@@ -754,7 +832,7 @@ function AddProperty() {
                         />}
                         label="Pool" />
                 </Grid>
-                <Grid item container style={{ marginTop: '1rem' }}>
+                <Grid item xs={2} style={{ marginTop: '1rem' }}>
                     <FormControlLabel
                         control={<Checkbox checked={state.elevatorValue}
                             onChange={(e) =>
@@ -766,7 +844,7 @@ function AddProperty() {
                         />}
                         label="Elevator" />
                 </Grid>
-                <Grid item container style={{ marginTop: '1rem' }}>
+                <Grid item xs={2} style={{ marginTop: '1rem' }}>
                     <FormControlLabel
                         control={<Checkbox checked={state.cctvValue}
                             onChange={(e) =>
@@ -778,7 +856,7 @@ function AddProperty() {
                         />}
                         label="CCTV" />
                 </Grid>
-                <Grid item container style={{ marginTop: '1rem' }}>
+                <Grid item xs={2} style={{ marginTop: '1rem' }}>
                     <FormControlLabel
                         control={<Checkbox checked={state.parkingValue}
                             onChange={(e) =>
@@ -790,11 +868,14 @@ function AddProperty() {
                         />}
                         label="Parking" />
                 </Grid>
+
+                </Grid>
+                
                 <Grid item container justifyContent={'space-between'}>
                     <Grid item xs={5} style={{ marginTop: '1rem' }}>
                         <TextField
                             id="area"
-                            label="Area"
+                            label="Area*"
                             variant='standard'
                             fullWidth
                             value={state.areaValue}
@@ -819,7 +900,7 @@ function AddProperty() {
                     <Grid item xs={5} style={{ marginTop: '1rem' }}>
                         <TextField
                             id="borough"
-                            label="Borough"
+                            label="Borough*"
                             variant='standard'
                             fullWidth
                             value={state.boroughValue}
