@@ -79,6 +79,7 @@ I will be using:
   - [Logging In User](#logging-in-user)
   - [User Logging Out Functionality](#user-logging-out-functionality-1)
   - [Building the Add Property Page](#building-the-add-property-page)
+    - [Frontend AddProperty Page Logic](#frontend-addproperty-page-logic)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -456,8 +457,9 @@ Users can log out by selecting the "Logout" option from the user menu in the hea
 
 ## Building the Add Property Page
 The Add Property page allows authenticated users to submit new property listings. It includes a form with fields for title, listing type, description, area, borough, property status, geographic coordinates (latitude and longitude), price, rental frequency, number of rooms, and various amenities (e.g., furnished, pool, elevator, CCTV, and parking). Additional fields support image uploads for multiple pictures of the property.
-
-The form uses controlled components with state managed by the use-immer reducer. Upon submission, the form data is sent to the backend API endpoint for property creation. Successful submission redirects the user, while validation errors are handled in the UI.
+  
+### Frontend AddProperty Page Logic
+The frontend page now includes enhanced interactive map functionality. When a user selects a borough, the map automatically repositions the marker and updates the latitude/longitude fields. Additionally, uploading pictures immediately previews the selected filenames, ensuring a smoother user experience.
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
