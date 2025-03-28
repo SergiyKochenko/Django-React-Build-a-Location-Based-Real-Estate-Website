@@ -81,6 +81,7 @@ I will be using:
   - [Building the Add Property Page](#building-the-add-property-page)
     - [Frontend AddProperty Page Logic](#frontend-addproperty-page-logic)
     - [Making the Request to Add a Property Listing](#making-the-request-to-add-a-property-listing)
+    - [Restrictions for Adding a Property Listing](#restrictions-for-adding-a-property-listing)
   - [Listings Page Modifications](#listings-page-modifications)
   - [Usage](#usage)
   - [Deployment](#deployment)
@@ -465,6 +466,9 @@ The frontend page now includes enhanced interactive map functionality. When a us
 ### Making the Request to Add a Property Listing
 The Add Property page collects user inputs and assembles them into a FormData object. When the form is submitted, Axios sends a POST request to the Django endpoint (ensure the URL ends with a slash, e.g., `/api/listings/create/`) along with the property details and images.
 
+### Restrictions for Adding a Property Listing
+Created restrictions in the Add Property page enforcing that only logged-in users with a complete profile (agency name and phone number) can submit a property listing.
+
 ## Listings Page Modifications
 To resolve issues with the Listings page, the Material UI packages were adjusted. Run the following commands of the project folder:
 ```bash
@@ -830,4 +834,4 @@ const [state, dispatch] = useImmerReducer(reducer, initialState);
 ## Profile Model
 - Created the Profile Model in backend/users/models.py to handle additional seller details such as agency name, phone number, bio, and profile picture.
 - Added Django signals in backend/users/signals.py to automatically create a profile for each user.
-````
+`````
