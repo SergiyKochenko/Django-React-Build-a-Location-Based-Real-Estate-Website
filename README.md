@@ -81,6 +81,7 @@ I will be using:
   - [Building the Add Property Page](#building-the-add-property-page)
     - [Frontend AddProperty Page Logic](#frontend-addproperty-page-logic)
     - [Making the Request to Add a Property Listing](#making-the-request-to-add-a-property-listing)
+  - [Listings Page Modifications](#listings-page-modifications)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -332,9 +333,7 @@ router = routers.DefaultRouter()
 router.register(r'listings', ListingViewSet)
 
 urlpatterns = [
-    ...existing code...
     path('api/', include(router.urls)),
-
 ]
 ```
 
@@ -464,6 +463,13 @@ The frontend page now includes enhanced interactive map functionality. When a us
 
 ### Making the Request to Add a Property Listing
 The Add Property page collects user inputs and assembles them into a FormData object. When the form is submitted, Axios sends a POST request to the Django endpoint (ensure the URL ends with a slash, e.g., `/api/listings/create/`) along with the property details and images.
+
+## Listings Page Modifications
+To resolve issues with the Listings page, the Material UI packages were adjusted. Run the following commands of the project folder:
+```bash
+npm uninstall @mui/material @mui/icons-material
+npm install @mui/material@6.4.9 @mui/icons-material@6.4.9
+```
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
