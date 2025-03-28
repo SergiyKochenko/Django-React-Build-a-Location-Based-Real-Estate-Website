@@ -125,6 +125,7 @@ I will be using:
   - [Testing the useEffect Hook](#testing-the-useeffect-hook)
   - [Cleaning Repository History](#cleaning-repository-history)
   - [Another Way of Managing State in React](#another-way-of-managing-state-in-react)
+  - [Profile Model](#profile-model)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -825,3 +826,6 @@ function reducer(draft, action) {
 }
 const [state, dispatch] = useImmerReducer(reducer, initialState);
 ```
+
+## Profile Model
+- Created the Profile Model in backend/users/models.py to handle additional seller details such as agency name, phone number, bio, and profile picture.
