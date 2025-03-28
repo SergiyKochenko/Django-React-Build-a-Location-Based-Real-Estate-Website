@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo, useContext } from 'react';
+import React, { useEffect, useState, useRef, useMemo, useContext, use } from 'react';
 import { data, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import { useImmerReducer } from 'use-immer';
@@ -176,6 +176,10 @@ function AddProperty() {
         },
         uploadedPictures: [],
         sendRequest: 0,
+        userProfile: {
+            agencyName: '',
+            phoneNumber: '',
+        },
     };
 
     function ReducerFunction(draft, action) {
@@ -258,6 +262,10 @@ function AddProperty() {
                 break;
             case 'changeSendRequest':
                 draft.sendRequest = draft.sendRequest + 1;
+                break;
+            case 'catchUserProfileInfo':
+                draft.userProfile.agencyName = action.profileObject.agency_name;
+                draft.userProfile.phoneNumber = action.profileObject.phone_number;
                 break;
             default:
                 break;
@@ -640,7 +648,22 @@ function AddProperty() {
         }
     }, [state.uploadedPictures[4]]);
 
-    // Submitting the form
+    useEffect(() => {
+        async function GetProfileInfo(){
+            try{
+                const response = await Axios.get(`http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`);
+                console.log(response.data);
+                dispatch({
+                    type: 'catchUserProfileInfo',
+                    profileObject: response.data,
+                });
+            }catch(e) {
+                console.log(e.response);
+            }
+        }
+        GetProfileInfo();
+    }, [])
+
     function FormSubmit(e) {
         e.preventDefault();
         console.log('Form Submitted');
@@ -696,6 +719,49 @@ function AddProperty() {
             return 'Price*';
     }
 }
+
+    function SubmitButtomDisplay() {
+        if (GlobalState.userIsLogged && state.userProfile.agencyName !== null && state.userProfile.agencyName !== '' && state.userProfile.phoneNumber !== null && state.userProfile.phoneNumber !== '') {
+            return (
+                <Button
+                    variant='contained'
+                    color='primary'
+                    fullWidth
+                    type='submit'
+                    className={classes.registerBtn}
+                >
+                    SUBMIT
+                </Button>
+            );
+
+        }
+        else if (GlobalState.userIsLogged && (state.userProfile.agencyName === null || state.userProfile.agencyName === '' || state.userProfile.phoneNumber === null || state.userProfile.phoneNumber === '')) {
+            return (
+                <Button
+                    variant='outlined'
+                    color='primary'
+                    fullWidth
+                    className={classes.registerBtn}
+                    onClick={() => navigate('/profile')}
+                >
+                    COMPLETE YOUR PROFILE TO ADD A PROPERTY
+                </Button>
+            );
+        }
+        else if (!GlobalState.userIsLogged) {
+            return (
+                <Button
+                    variant='outlined'
+                    color='primary'
+                    fullWidth
+                    onClick={() => navigate('/login')}
+                    className={classes.registerBtn}
+                >
+                    LOGIN TO ADD A PROPERTY
+                </Button>
+            );
+        }
+    }
 
     return (
         <div className={classes.formContainer}>
@@ -1041,15 +1107,7 @@ function AddProperty() {
                     xs={8}
                     style={{ marginTop: '1rem', marginLeft: 'auto', marginRight: 'auto' }}
                 >
-                    <Button
-                        variant='contained'
-                        color='primary'
-                        fullWidth
-                        type='submit'
-                        className={classes.registerBtn}
-                    >
-                        SUBMIT
-                    </Button>
+                {SubmitButtomDisplay()}
                 </Grid>
             </form>
             <Button onClick={() => console.log(state.uploadedPictures)}>
