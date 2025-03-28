@@ -829,3 +829,5 @@ const [state, dispatch] = useImmerReducer(reducer, initialState);
 
 ## Profile Model
 - Created the Profile Model in backend/users/models.py to handle additional seller details such as agency name, phone number, bio, and profile picture.
+- Added Django signals in backend/users/signals.py to automatically create a profile for each user.
+````
