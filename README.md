@@ -127,6 +127,7 @@ I will be using:
   - [Cleaning Repository History](#cleaning-repository-history)
   - [Another Way of Managing State in React](#another-way-of-managing-state-in-react)
   - [Profile Model](#profile-model)
+  - [Building the Profile Page](#building-the-profile-page)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -834,4 +835,19 @@ const [state, dispatch] = useImmerReducer(reducer, initialState);
 ## Profile Model
 - Created the Profile Model in backend/users/models.py to handle additional seller details such as agency name, phone number, bio, and profile picture.
 - Added Django signals in backend/users/signals.py to automatically create a profile for each user.
-`````
+
+## Building the Profile Page
+
+- **Overview:**  
+  The profile page consists of two main components: `Profile.js` and `ProfileUpdate.js`.
+  
+- **Profile.js:**  
+  - Fetches user profile data from the backend using Axios.  
+  - Displays a welcome message and the current profile picture or a default image.  
+  - Renders the `ProfileUpdate` component for profile modifications.
+  
+- **ProfileUpdate.js:**  
+  - Contains the form for updating the profile with fields for Agency Name, Phone Number, Bio, and profile picture upload.  
+  - Uses Material UI for form styling and layout.  
+  - Manages state updates using the `useImmerReducer` hook.  
+  - Submits the form data using a PATCH request to update the profile details.
