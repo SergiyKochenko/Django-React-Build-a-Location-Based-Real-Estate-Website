@@ -203,7 +203,7 @@ function Listings () {
       
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          {listing.seller_username}
+          {listing.seller_agency_name}
         </IconButton>
       </CardActions>
     </Card>
