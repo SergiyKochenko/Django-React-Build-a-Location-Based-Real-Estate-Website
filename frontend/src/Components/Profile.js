@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo, useContext, use } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import { useImmerReducer } from 'use-immer';
 
@@ -59,12 +59,15 @@ function Profile() {
             userProfile: {
                 agencyName: '',
                 phoneNumber: '',
+                profilePic: '',
+                bio: '',
             },
             agencyNameValue: '',
             phoneNumberValue: '',
             bioValue: '',
             pictureValue: [],
             profilePictureValue: '',
+            sendRequest: 0,
         };
     
         function ReducerFunction(draft, action) {
@@ -72,6 +75,8 @@ function Profile() {
                 case 'catchUserProfileInfo':
                     draft.userProfile.agencyName = action.profileObject.agency_name;
                     draft.userProfile.phoneNumber = action.profileObject.phone_number;
+                    draft.userProfile.profilePic = action.profileObject.profile_picture;
+                    draft.userProfile.bio = action.profileObject.bio;
                     break;
                 case 'catchAgencyNameChange':
                     draft.agencyNameValue = action.agencyNameChosen;
@@ -87,7 +92,10 @@ function Profile() {
                     break;
                 case 'catchProfilePictureChange':
                     draft.profilePictureValue = action.profilePictureChosen;
-                    break;                
+                    break;
+                case 'catchSendRequest':
+                    draft.sendRequest = draft.sendRequest + 1;
+                    break;            
                 default:
                     break;
             }
@@ -120,25 +128,115 @@ function Profile() {
         GetProfileInfo();
     }, [])
 
+    // use effect to send the form data to the backend
+
+    useEffect(() => {
+        if (state.sendRequest) {
+            async function UpdateProfile() {
+                const formData = new FormData();
+                formData.append('agency_name', state.agencyNameValue);
+                formData.append('phone_number', state.phoneNumberValue);
+                formData.append('bio', state.bioValue);
+                formData.append('profile_picture', state.profilePictureValue);
+                formData.append('seller', GlobalState.userId);
+
+                try {
+                    const response = await Axios.patch(
+                        `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/update/`, 
+                        formData
+                    );
+                    console.log(response.data);
+                    // navigate('/listings');
+                } catch (e) {
+                    console.log(e.response);
+                }
+            }
+            UpdateProfile();
+        }
+    }, [state.sendRequest]);
+
+    function FormSubmit(e) {
+        e.preventDefault();
+        dispatch({
+            type: 'catchSendRequest',
+        });
+    }
+
+    function WelcomeDisplay() {
+        if (state.userProfile.agencyName === null || state.userProfile.agencyName === '' || state.userProfile.phoneNumber === null || state.userProfile.phoneNumber === '') {
+            return (
+                <Typography 
+                variant='h5' 
+                style={{textAlign: 'center', 
+                        margin: '1rem'}}>
+                    
+                Welcome {" "} 
+                <span style={{color: 'green', 
+                    fontWeight: 'bolder'}}>
+                    {GlobalState.userUsername}
+                </span>{""}
+                , please submit this form below to update your profile
+                </Typography>
+            )
+        }
+        else {
+            return (
+                <Grid 
+                container
+                style={{ width: '50%',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        marginTop: '1rem',
+                        border: '5px solid black',
+                        padding: '5px',
+                        }}>
+                    <Grid item xs={6}>
+                        <img style={{height: '10rem', width: '15rem'}} src={state.userProfile.profilePic} alt="Profile of the user" />
+                    </Grid>
+                    <Grid 
+                        item 
+                        container 
+                        direction= 'column' 
+                        justifyContent= 'center' 
+                        xs={6}
+                        >
+                        <Grid item>
+                        <Typography 
+                        variant='h5' 
+                        style={{textAlign: 'center', 
+                                margin: '1rem'}}>
+                    
+                        Welcome {" "} 
+                        <span style={{color: 'green', 
+                                    fontWeight: 'bolder'}}>
+                            {GlobalState.userUsername}
+                        </span>
+                        </Typography>
+                        </Grid>
+                        <Grid item>
+                        <Typography 
+                        variant='h5' 
+                        style={{textAlign: 'center', 
+                                margin: '1rem'}}>
+                    
+                        You have x properties listed
+                        </Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            )
+        }
+        }
+
+
   return (
     <>
     <div>
-      <Typography 
-        variant='h5' 
-        style={{textAlign: 'center', 
-                margin: '1rem'}}>
-                    
-        Welcome {" "} 
-        <span style={{color: 'green', 
-                    fontWeight: 'bolder'}}>
-            {GlobalState.userUsername}
-        </span>{""}
-        , please submit this form below to update your profile
-      </Typography>
+      {WelcomeDisplay()}
     </div>
 
       <div className={classes.formContainer}>
-                  <form>
+                  <form onSubmit={FormSubmit}>
                       <Grid item container justifyContent={'center'}>
                           <Typography variant='h4'>MY PROFILE</Typography>
                       </Grid>
