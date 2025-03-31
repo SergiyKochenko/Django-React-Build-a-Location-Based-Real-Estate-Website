@@ -471,11 +471,10 @@ The Add Property page collects user inputs and assembles them into a FormData ob
 Created restrictions in the Add Property page enforcing that only logged-in users with a complete profile (agency name and phone number) can submit a property listing.
 
 ## Listings Page Modifications
-To resolve issues with the Listings page, the Material UI packages were adjusted. Run the following commands of the project folder:
-```bash
-npm uninstall @mui/material @mui/icons-material
-npm install @mui/material@6.4.9 @mui/icons-material@6.4.9
-```
+- Updated Listings.js to fetch all listings using Axios with a cancellation token.
+- Integrated interactive map features using React-Leaflet.
+- Added flyTo functionality on listing selection allowing users to focus on a property location.
+- Improved card layout and price formatting with Material UI.
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
