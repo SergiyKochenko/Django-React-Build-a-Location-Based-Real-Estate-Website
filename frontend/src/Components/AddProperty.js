@@ -171,8 +171,8 @@ function AddProperty() {
         picture5Value: '',
         mapInstance: null,
         markerPosition: {
-            lat: "51.505",
-            lng: "-0.09",
+            lat: 51.505,
+            lng: -0.09,
         },
         uploadedPictures: [],
         sendRequest: 0,
@@ -281,6 +281,7 @@ function AddProperty() {
     }
 
     useEffect(() => {
+        if (!state.mapInstance) return;
         if (state.boroughValue === "Camden") {
             state.mapInstance.flyTo([51.54103467179952, -0.14870897037846917], 12);
             dispatch({
@@ -513,7 +514,7 @@ function AddProperty() {
                 changeLongitude: -0.012215840493378892,
             });
         }
-    }, [state.boroughValue, dispatch, state.mapInstance]);
+    }, [state.boroughValue, state.mapInstance, dispatch]);
 
     function BoroughDisplay() {
         if (state.boroughValue === "Camden") {

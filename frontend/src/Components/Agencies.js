@@ -96,7 +96,9 @@ function Agencies() {
         justifyContent="flex-start" 
         spacing={2}
         style={{padding: "10px"}}>
-    {state.agenciesList.map((agency) => {
+    {state.agenciesList
+         .filter(agency => agency)
+         .map((agency) => {
         function PropertiesDisplay(){
             if (agency.seller_listings.length === 0){
                 return (
@@ -107,14 +109,14 @@ function Agencies() {
             }
             else if (agency.seller_listings.length === 1){
                 return (
-                    <Button size="small">
+                    <Button size="small" onClick={() => navigate(`/agencies/${agency.seller}`)}>
                         One Property listed
                     </Button>
                 )
             }
             else {
                 return (
-                    <Button size="small">
+                    <Button size="small" onClick={() => navigate(`/agencies/${agency.seller}`)}>
                         {agency.seller_listings.length} Properties
                     </Button>
                 )

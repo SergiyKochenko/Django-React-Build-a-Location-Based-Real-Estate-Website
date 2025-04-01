@@ -67,6 +67,7 @@ function Profile() {
                 phoneNumber: '',
                 profilePic: '',
                 bio: '',
+                sellerId: '',
                 sellerListings: [],
             },
             dataIsLoading: true,
@@ -80,6 +81,7 @@ function Profile() {
                     draft.userProfile.profilePic = action.profileObject.profile_picture;
                     draft.userProfile.bio = action.profileObject.bio;
                     draft.userProfile.sellerListings = action.profileObject.seller_listings;
+                    draft.userProfile.sellerId = action.profileObject.seller;
                     break;
                 case 'loadingDone':
                     draft.dataIsLoading = false;
@@ -113,21 +115,21 @@ function Profile() {
     function PropertiesDisplay(){
                 if (state.userProfile.sellerListings.length === 0){
                     return (
-                        <Button disabled size="small">
+                        <Button onClick={() => navigate(`/agencies/${state.userProfile.sellerId}`)} disabled size="small">
                             No Property
                         </Button>
                     )
                 }
                 else if (state.userProfile.sellerListings.length === 1){
                     return (
-                        <Button size="small">
+                        <Button onClick={() => navigate(`/agencies/${state.userProfile.sellerId}`)} size="small">
                             One Property listed
                         </Button>
                     )
                 }
                 else {
                     return (
-                        <Button size="small">
+                        <Button onClick={() => navigate(`/agencies/${state.userProfile.sellerId}`)} size="small">
                             {state.userProfile.sellerListings.length} Properties
                         </Button>
                     )
