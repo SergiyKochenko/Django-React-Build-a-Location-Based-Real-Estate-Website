@@ -67,6 +67,7 @@ function Profile() {
                 phoneNumber: '',
                 profilePic: '',
                 bio: '',
+                sellerListings: [],
             },
             dataIsLoading: true,
         };
@@ -78,6 +79,7 @@ function Profile() {
                     draft.userProfile.phoneNumber = action.profileObject.phone_number;
                     draft.userProfile.profilePic = action.profileObject.profile_picture;
                     draft.userProfile.bio = action.profileObject.bio;
+                    draft.userProfile.sellerListings = action.profileObject.seller_listings;
                     break;
                 case 'loadingDone':
                     draft.dataIsLoading = false;
@@ -107,6 +109,30 @@ function Profile() {
         }
         GetProfileInfo();
     }, [])
+
+    function PropertiesDisplay(){
+                if (state.userProfile.sellerListings.length === 0){
+                    return (
+                        <Button disabled size="small">
+                            No Property
+                        </Button>
+                    )
+                }
+                else if (state.userProfile.sellerListings.length === 1){
+                    return (
+                        <Button size="small">
+                            One Property listed
+                        </Button>
+                    )
+                }
+                else {
+                    return (
+                        <Button size="small">
+                            {state.userProfile.sellerListings.length} Properties
+                        </Button>
+                    )
+                }
+            }
 
     function WelcomeDisplay() {
         if (state.userProfile.agencyName === null || state.userProfile.agencyName === '' || state.userProfile.phoneNumber === null || state.userProfile.phoneNumber === '') {
@@ -172,7 +198,7 @@ function Profile() {
                         style={{textAlign: 'center', 
                                 margin: '1rem'}}>
                     
-                        You have x properties listed
+                        You have {PropertiesDisplay()}
                         </Typography>
                         </Grid>
                     </Grid>
