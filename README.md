@@ -84,6 +84,8 @@ I will be using:
     - [Restrictions for Adding a Property Listing](#restrictions-for-adding-a-property-listing)
   - [Listings Page Modifications](#listings-page-modifications)
   - [Building the Agencies Page](#building-the-agencies-page)
+  - [Building the Agency Detail Page](#building-the-agency-detail-page)
+    - [How to Build \& Test](#how-to-build--test)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -491,6 +493,24 @@ Follow these steps to build the Agencies page:
 2. Install dependencies such as Axios, use-immer, and Material UI.
 3. The page is accessible via the `/agencies` route.
 4. Adjust styling and component logic as needed for your use case.
+
+## Building the Agency Detail Page
+
+The Agency Detail page is built with React and leverages several key libraries and techniques:
+
+- **React Router:** The component uses `useParams` and `useNavigate` for route handling.
+- **Axios:** API calls are made to fetch profile details from the backend.
+- **useImmerReducer:** For state management and handling asynchronous updates.
+- **Material UI:** Used for layout and styling including Grid, Card, Typography, IconButton, and more.
+- **Conditional Rendering:** Displays a loading spinner until data is fetched and then renders the agency’s profile picture, agency name, contact info, and a list of properties.
+- **Fallbacks:** If no profile image is available, a default profile picture is shown.
+
+### How to Build & Test
+
+1. Ensure all dependencies are installed by running `npm install` (or `yarn install`).
+2. Run the development server with `npm start` (or `yarn start`).
+3. Navigate to the route `/agencies/:id` to test the Agency Detail page.
+4. Check the browser console for any API call errors and verify that the agency details and listings are rendered correctly.
 
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
