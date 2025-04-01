@@ -129,6 +129,7 @@ I will be using:
   - [Another Way of Managing State in React](#another-way-of-managing-state-in-react)
   - [Profile Model](#profile-model)
   - [Building the Profile Page](#building-the-profile-page)
+  - [Displaying the Number of Listings for Each User](#displaying-the-number-of-listings-for-each-user)
 
 ## UX
 The application is designed with a focus on usability and a seamless user journey:
@@ -865,4 +866,10 @@ const [state, dispatch] = useImmerReducer(reducer, initialState);
   - Uses Material UI for form styling and layout.  
   - Manages state updates using the `useImmerReducer` hook.  
   - Submits the form data using a PATCH request to update the profile details.
-````
+
+## Displaying the Number of Listings for Each User
+
+The application now displays the total number of property listings associated with each user. This is achieved by:
+- Using the ProfileSerializer to include a `seller_listings` field that returns all listings for the user.
+- Rendering a count indicator (e.g., "No Property", "One Property listed", or "X Properties") on both the Profile and Agencies pages.
+- Enabling users to quickly see how many listings they have as part of their profile overview.
