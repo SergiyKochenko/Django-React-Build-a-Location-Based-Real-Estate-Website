@@ -83,6 +83,7 @@ I will be using:
     - [Making the Request to Add a Property Listing](#making-the-request-to-add-a-property-listing)
     - [Restrictions for Adding a Property Listing](#restrictions-for-adding-a-property-listing)
   - [Listings Page Modifications](#listings-page-modifications)
+  - [Building the Agencies Page](#building-the-agencies-page)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -476,6 +477,20 @@ Created restrictions in the Add Property page enforcing that only logged-in user
 - Added flyTo functionality on listing selection allowing users to focus on a property location.
 - Improved card layout and price formatting with Material UI.
 
+## Building the Agencies Page
+
+The Agencies page displays a list of agencies by fetching data from the backend API. Key points:
+- Uses Axios to retrieve profiles.
+- Utilizes React hooks and the useImmerReducer for state management.
+- Integrates Material UI components (Grid, Card, etc.) for the UI.
+- Displays a default profile picture if none is provided.
+  
+Follow these steps to build the Agencies page:
+1. Ensure the backend API is running at the expected endpoint.
+2. Install dependencies such as Axios, use-immer, and Material UI.
+3. The page is accessible via the `/agencies` route.
+4. Adjust styling and component logic as needed for your use case.
+
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
 - **Testing:**
@@ -850,3 +865,4 @@ const [state, dispatch] = useImmerReducer(reducer, initialState);
   - Uses Material UI for form styling and layout.  
   - Manages state updates using the `useImmerReducer` hook.  
   - Submits the form data using a PATCH request to update the profile details.
+````
