@@ -88,6 +88,8 @@ I will be using:
     - [How to Build \& Test](#how-to-build--test)
   - [Building the Listing Detail Page](#building-the-listing-detail-page)
     - [How to Build \& Test](#how-to-build--test-1)
+  - [Building the Image Slider](#building-the-image-slider)
+    - [How to Build \& Test](#how-to-build--test-2)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -523,6 +525,19 @@ The Listing Detail page is a dedicated React component that displays full detail
 2. Verify that Listings components link to the detail view using React Router.
 3. Run `npm start` and click on any listing to confirm the detail page renders correctly.
 
+## Building the Image Slider
+
+The image slider is implemented in the Listing Detail component to display multiple pictures of a property. Key points include:
+- An array of image URLs is created from the listing info.
+- Navigation controls (left/right arrows) allow users to cycle through the images.
+- Conditional rendering ensures only the current image is shown.
+- The slider leverages Material UI icons (e.g., ArrowCircleLeftIcon and ArrowCircleRightIcon) for a polished UI.
+
+### How to Build & Test
+1. Verify that the `ListingDetail.js` file in `frontend/src/Components` contains the image slider code.
+2. Ensure that the image array is correctly populated from the listing details.
+3. Run the development server (`npm start`), navigate to a listing detail page (e.g., `/listings/:id`) and use the arrow controls to browse the images.
+
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
 - **Testing:**
@@ -904,4 +919,4 @@ The application now displays the total number of property listings associated wi
 - Using the ProfileSerializer to include a `seller_listings` field that returns all listings for the user.
 - Rendering a count indicator (e.g., "No Property", "One Property listed", or "X Properties") on both the Profile and Agencies pages.
 - Enabling users to quickly see how many listings they have as part of their profile overview.
-````
+`````
