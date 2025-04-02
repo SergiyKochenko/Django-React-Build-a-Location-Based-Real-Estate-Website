@@ -30,9 +30,39 @@ import {
     Link,
 } from '@mui/material';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import { makeStyles } from '@mui/styles';
 
-const useStyles = makeStyles({})
+const useStyles = makeStyles({
+    sliderContainer: {
+        position: 'relative',
+        marginTop: '1rem',
+    },
+
+    leftArrow: {
+        position: 'absolute',
+        cursor: 'pointer',
+        fontSize: '3rem',
+        color: 'white',
+        top: '50%',
+        left: '27.5%',
+        "&:hover": {
+            color: 'lightgray',
+        }
+    },
+    rightArrow: {
+        position: 'absolute',
+        cursor: 'pointer',
+        fontSize: '3rem',
+        color: 'white',
+        top: '50%',
+        right: '27.5%',
+        "&:hover": {
+            color: 'lightgray',
+        }
+    }
+})
 
 function ListingDetail() {
     const classes = useStyles();
@@ -80,6 +110,33 @@ function ListingDetail() {
         GetListingInfo();
     }, [])
 
+    const listingPictures = [
+        state.listingInfo.picture1,
+        state.listingInfo.picture2,
+        state.listingInfo.picture3,
+        state.listingInfo.picture4,
+        state.listingInfo.picture5,
+    ].filter((picture) => picture !== null);
+
+    const [currentPicture, setCurrentPicture] = useState(0);
+
+    function NextPicture() {
+        if (currentPicture === listingPictures.length - 1) {
+            return setCurrentPicture(0);
+        } else {
+            setCurrentPicture(currentPicture + 1);
+        }
+        
+    }
+
+    function PreviousPicture() {
+        if (currentPicture === 0) {
+            return setCurrentPicture(listingPictures.length - 1);
+        } else {
+            setCurrentPicture(currentPicture - 1);
+        }
+    }
+
     if (state.dataIsLoading === true) {
         return (
           <Grid 
@@ -105,6 +162,25 @@ return (
                 <Typography sx={{ color: 'text.primary' }}>{state.listingInfo.title}</Typography>
             </Breadcrumbs>
         </Grid>
+        {/* Image slider */}
+        {listingPictures.length > 0 ? (
+            <Grid item container justifyContent='center' className={classes.sliderContainer}>
+            {listingPictures.map((picture, index) => {
+                return(
+                    <div key={index}>
+                        {index === currentPicture ? ( 
+                            <img 
+                                src={picture}
+                                alt={`Listing ${index + 1}`}
+                                style={{width: '45rem', height: '35rem'}} />
+                                ) : ('')}
+                    </div>
+                )
+            })}
+            <ArrowCircleLeftIcon onClick={PreviousPicture} className={classes.leftArrow} />
+            <ArrowCircleRightIcon onClick={NextPicture} className={classes.rightArrow} />
+        </Grid>
+        ) : ('')}
     </div>
 )
 }
