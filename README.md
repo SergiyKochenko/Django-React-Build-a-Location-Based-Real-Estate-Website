@@ -86,6 +86,8 @@ I will be using:
   - [Building the Agencies Page](#building-the-agencies-page)
   - [Building the Agency Detail Page](#building-the-agency-detail-page)
     - [How to Build \& Test](#how-to-build--test)
+  - [Building the Listing Detail Page](#building-the-listing-detail-page)
+    - [How to Build \& Test](#how-to-build--test-1)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -512,6 +514,15 @@ The Agency Detail page is built with React and leverages several key libraries a
 3. Navigate to the route `/agencies/:id` to test the Agency Detail page.
 4. Check the browser console for any API call errors and verify that the agency details and listings are rendered correctly.
 
+## Building the Listing Detail Page
+
+The Listing Detail page is a dedicated React component that displays full details for a selected property. Users can access this page by clicking on a listing image or title in the Listings view, which navigates to a route like `/listings/:id`.
+
+### How to Build & Test
+1. Ensure that the file `ListingDetail.js` exists in `frontend/src/Components/ListingDetail.js`.
+2. Verify that Listings components link to the detail view using React Router.
+3. Run `npm start` and click on any listing to confirm the detail page renders correctly.
+
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
 - **Testing:**
@@ -893,3 +904,4 @@ The application now displays the total number of property listings associated wi
 - Using the ProfileSerializer to include a `seller_listings` field that returns all listings for the user.
 - Rendering a count indicator (e.g., "No Property", "One Property listed", or "X Properties") on both the Profile and Agencies pages.
 - Enabling users to quickly see how many listings they have as part of their profile overview.
+````
