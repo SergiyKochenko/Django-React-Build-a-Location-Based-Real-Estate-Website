@@ -167,13 +167,16 @@ function AgencyDetail() {
                                     >
                                         <Card>
                                     <CardMedia
-                                        sx={{ height: 140 }}
+                                        component="img"
+                                        height= "140"
                                         image={
                                                 `http://127.0.0.1:8000/${listing.picture1}` 
                                                 ? `http://127.0.0.1:8000/${listing.picture1}` 
                                                 : defaultProfilePicture
                                             }
-                                        title="Listing Picture"
+                                        alt="Listing Picture"
+                                        onClick={() => navigate(`/listings/${listing.id}`)}
+                                        style={{cursor: 'pointer'}}
                                     />
                                     <CardContent>
                                         <Typography gutterBottom variant="h5" component="div">

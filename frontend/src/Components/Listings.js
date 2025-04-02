@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { useImmerReducer } from 'use-immer'
+import { useNavigate } from 'react-router-dom'
 
 // React Leaflet
 import { 
@@ -51,6 +52,7 @@ const useStyles = makeStyles({
     paddingLeft: '1rem',
     height: '20rem',
     width: '30rem',
+    cursor: 'pointer',
   },
   priceOverlay: {
     position: 'absolute',
@@ -71,6 +73,7 @@ function Listings () {
 //   .then(response => response.json())
 //   .then(data => console.log(data))
 
+  const navigate = useNavigate()
   const classes = useStyles()
   const houseIcon = new Icon({
     iconUrl: houseIconPng,
@@ -182,6 +185,7 @@ function Listings () {
         component="img"
         image={listing.picture1}
         alt={listing.title}
+        onClick={() => navigate(`/listings/${listing.id}`)}
       />
       <CardContent>
         <Typography variant="body2">
@@ -222,31 +226,39 @@ function Listings () {
             <TheMapComponent />
 
             {allListings.map((listing) => {
+              if (!(listing.latitude && listing.longitude)) {
+                return null; // Skip rendering marker if coordinates are missing
+              }
               function IconDisplay () {
                 if (listing.listing_type === 'House') {
-                  return houseIcon
+                  return houseIcon;
                 } else if (listing.listing_type === 'Apartment') {
-                  return apartmentIcon
+                  return apartmentIcon;
                 } else if (listing.listing_type === 'Office') {
-                  return officeIcon
+                  return officeIcon;
                 }
+                // Optionally return a default icon if none match
+                return houseIcon;
               }
               return (
                 <Marker 
-                key={listing.id}
-                icon={IconDisplay()}
-                  position={[
-                    listing.latitude, 
-                    listing.longitude,
-                    ]}>
-
-                      <Popup>
-                <Typography variant='h5'>{listing.title}</Typography>
-                <img src={listing.picture1} alt='picture1' style={{ height: '14rem', width: '18rem' }} />
-                <Typography variant='body1'>{listing.description.substring(0, 150)} ...</Typography>
-                <Button variant='contained' fullWidth>View</Button>
-              </Popup>
-
+                  key={listing.id}
+                  icon={IconDisplay()}
+                  position={[listing.latitude, listing.longitude]}>
+                  <Popup>
+                    <Typography variant='h5'>{listing.title}</Typography>
+                    <img 
+                      src={listing.picture1} 
+                      alt='picture1' 
+                      style={{
+                        height: '14rem', 
+                        width: '18rem',
+                        cursor: 'pointer',
+                        }}
+                      onClick={()=>navigate(`/listings/${listing.id}`)} />
+                    <Typography variant='body1'>{listing.description.substring(0, 150)} ...</Typography>
+                    <Button variant='contained' fullWidth onClick={()=>navigate(`/listings/${listing.id}`)}>View</Button>
+                  </Popup>
                 </Marker>
               )
             })}

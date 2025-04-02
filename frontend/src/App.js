@@ -17,6 +17,7 @@ import AddProperty from './Components/AddProperty';
 import Profile from './Components/Profile';
 import Agencies from './Components/Agencies';
 import AgencyDetail from './Components/AgencyDetail';
+import ListingDetail from './Components/ListingDetail';
 
 // Contexts
 import DispatchContext from './Contexts/DispatchContext';
@@ -82,6 +83,7 @@ function App () {
         <Route path='/profile' element={<Profile/>} />
         <Route path='/agencies' element={<Agencies/>} />
         <Route path='/agencies/:id' element={<AgencyDetail/>} />
+        <Route path='/listings/:id' element={<ListingDetail/>} />
         <Route path='/listings' element={<Listings/>} />
         <Route path='/testing' element={<Testing/>} />
       </Routes>
