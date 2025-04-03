@@ -186,6 +186,19 @@ function ListingDetail() {
     const date = new Date(state.listingInfo.date_posted);
     const formattedDate = `Date posted: ${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 
+    async function DeleteHandler() {
+       const confirmDelete = window.confirm('Are you sure you want to delete this listing?');
+       if (confirmDelete){
+        try {
+          const response = await Axios.delete(`http://127.0.0.1:8000/api/listings/${params.id}/delete/`)
+            console.log(response.data);
+            navigate('/listings');
+        } catch (e) {
+        console.log(e.response.data);
+       }
+       }
+    }
+
     if (state.dataIsLoading === true) {
         return (
           <Grid 
@@ -355,6 +368,10 @@ return (
                               </Typography>
                               </Grid>
                           </Grid>
+                          {GlobalState.userId == state.listingInfo.seller ? (<Grid item container justifyContent='space-around'>
+                                <Button variant='contained' color='primary'>Update</Button>
+                                <Button variant='contained' color='error' onClick={DeleteHandler}>Delete</Button>
+                          </Grid>) : ('')}
                     </Grid>
 
                     {/* Map */}
