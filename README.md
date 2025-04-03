@@ -90,6 +90,7 @@ I will be using:
     - [How to Build \& Test](#how-to-build--test-1)
   - [Building the Image Slider](#building-the-image-slider)
     - [How to Build \& Test](#how-to-build--test-2)
+  - [Displaying Information about the Property Listing](#displaying-information-about-the-property-listing)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -538,6 +539,15 @@ The image slider is implemented in the Listing Detail component to display multi
 2. Ensure that the image array is correctly populated from the listing details.
 3. Run the development server (`npm start`), navigate to a listing detail page (e.g., `/listings/:id`) and use the arrow controls to browse the images.
 
+## Displaying Information about the Property Listing
+
+The Listing Detail page now displays additional information for each property. In addition to an image slider, the page shows:
+- The property title and borough.
+- The formatted posting date.
+- Detailed price information including listing type, property status (Sale/Rent), and rental frequency.
+- A summary of property features such as number of rooms, furnished status, pool, elevator, CCTV, and parking.
+- A complete description of the property.
+
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
 - **Testing:**
@@ -919,4 +929,4 @@ The application now displays the total number of property listings associated wi
 - Using the ProfileSerializer to include a `seller_listings` field that returns all listings for the user.
 - Rendering a count indicator (e.g., "No Property", "One Property listed", or "X Properties") on both the Profile and Agencies pages.
 - Enabling users to quickly see how many listings they have as part of their profile overview.
-`````
+```````
