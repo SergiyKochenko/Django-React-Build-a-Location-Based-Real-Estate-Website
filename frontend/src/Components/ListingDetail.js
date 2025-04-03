@@ -8,6 +8,14 @@ import StateContext from '../Contexts/StateContext';
 
 // Assets
 import defaultProfilePicture from './Assets/defaultProfilePicture.jpg';
+import stadiumIconPng from './Assets/Mapicons/stadium.png';
+import hospitalIconPng from './Assets/Mapicons/hospital.png';
+import univercityIconPng from './Assets/Mapicons/university.png';
+
+
+// React Leaflet
+import { MapContainer, TileLayer, Marker, useMap, Polygon, Popup } from 'react-leaflet';
+import { Icon } from 'leaflet';
 
 // Material UI
 import { 
@@ -22,8 +30,7 @@ import {
     CircularProgress, 
     TextField, 
     FormControlLabel, 
-    Checkbox, 
-    Icon,
+    Checkbox,
     IconButton,
     CardActions,
     Breadcrumbs,
@@ -73,6 +80,19 @@ function ListingDetail() {
     const GlobalState = useContext(StateContext);
 
     const params = useParams();
+
+    const stadiumIcon = new Icon({
+        iconUrl: stadiumIconPng,
+        iconSize: [40, 40],
+    });
+    const hospitalIcon = new Icon({
+        iconUrl: hospitalIconPng,
+        iconSize: [40, 40],
+    });
+    const universityIcon = new Icon({
+        iconUrl: univercityIconPng,
+        iconSize: [40, 40],
+    });
 
     const initialState = {
             dataIsLoading: true,
@@ -335,6 +355,107 @@ return (
                               </Typography>
                               </Grid>
                           </Grid>
+                    </Grid>
+
+                    {/* Map */}
+                    <Grid 
+                        item 
+                        container 
+                        style={{ marginTop: '1rem'}}
+                        spacing={1}
+                        justifyContent='space-between' >
+                        <Grid iten xs={3} style={{overflow: 'auto', height: '35rem'}}>
+                            {state.listingInfo.listing_pois_within_10km.map( (poi)=> {
+                            
+                            function DegreeToRadian(coordinate) {
+                                return (coordinate * Math.PI) / 180;
+                            }
+
+                            function CalculateDistance() {
+                            const latitude1 = DegreeToRadian(state.listingInfo.latitude);
+                            const longitude1 = DegreeToRadian(state.listingInfo.longitude);
+
+                            const latitude2 = DegreeToRadian(poi.location.coordinates[0]);
+                            const longitude2 = DegreeToRadian(poi.location.coordinates[1]);
+
+							// The formula
+							const latDiff = latitude2 - latitude1;
+							const lonDiff = longitude2 - longitude1;
+							const R = 6371000 / 1000;
+
+							const a =
+								Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
+								Math.cos(latitude1) *
+									Math.cos(latitude2) *
+									Math.sin(lonDiff / 2) *
+									Math.sin(lonDiff / 2);
+							const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+							const d = R * c;
+
+							const dist =
+								Math.acos(
+									Math.sin(latitude1) * Math.sin(latitude2) +
+										Math.cos(latitude1) *
+											Math.cos(latitude2) *
+											Math.cos(lonDiff)
+								) * R;
+							return dist.toFixed(2);
+						}
+                                                
+                                                return (
+                                                    <div key={poi.id}
+                                                    style={{marginBottom: '0.5rem', border: "1px solid black"}}>
+                                                        <Typography variant='h6'>{poi.name}</Typography>
+                                                        <Typography variant='subtitle1'>{poi.type} | <span style={{fontWeight: "bolder", color: "green"}}>{CalculateDistance()} Kilometers</span></Typography>
+                                                    </div>
+                                                )
+                                            })}
+                        </Grid>
+                        <Grid item xs={9} style={{ height: '35rem'}}>
+                            <MapContainer center={[
+                                state.listingInfo.latitude,
+                                state.listingInfo.longitude,
+                                ]} zoom={14} 
+                                scrollWheelZoom={true}
+                                >
+                                <TileLayer
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                                    />
+                                    <Marker 
+                                        position={[
+                                            state.listingInfo.latitude,
+                                            state.listingInfo.longitude,
+                                            ]}>
+                                            <Popup>
+                                                {state.listingInfo.title}
+                                            </Popup>
+                                    </Marker>
+                                            {state.listingInfo.listing_pois_within_10km.map( (poi)=> {
+                                                function PoiIcon(){
+                                                    if (poi.type === 'Stadium') {
+                                                        return stadiumIcon;
+                                                    } else if (poi.type === 'Hospital') {
+                                                        return hospitalIcon;
+                                                    } else if (poi.type === 'University') {
+                                                        return universityIcon;
+                                                    }
+                                                }
+                                                return (
+                                                    <Marker
+                                                         position={[
+                                                            poi.location.coordinates[0],
+                                                            poi.location.coordinates[1],
+                                                            ]}
+                                                            icon={PoiIcon()}>
+                                                        <Popup>{poi.name}</Popup>
+                                                    </Marker>
+                                                )
+                                            })}
+                                    
+                            </MapContainer>
+                        </Grid>
                     </Grid>
     </div>
 )
