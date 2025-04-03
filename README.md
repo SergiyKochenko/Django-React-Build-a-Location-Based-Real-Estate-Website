@@ -91,6 +91,7 @@ I will be using:
   - [Building the Image Slider](#building-the-image-slider)
     - [How to Build \& Test](#how-to-build--test-2)
   - [Displaying Information about the Property Listing](#displaying-information-about-the-property-listing)
+  - [Displaying Information about the Seller](#displaying-information-about-the-seller)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -548,6 +549,14 @@ The Listing Detail page now displays additional information for each property. I
 - A summary of property features such as number of rooms, furnished status, pool, elevator, CCTV, and parking.
 - A complete description of the property.
 
+## Displaying Information about the Seller
+
+The application now prominently displays seller information across several pages. Key details include:
+- Seller's agency name, phone number, and biography.
+- A profile picture (or a default image if none provided).
+- A summary of the number of property listings posted by the seller.
+- This information appears on the Profile, Agency Detail, and Agencies pages to help users quickly assess seller credibility.
+
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
 - **Testing:**
@@ -929,4 +938,4 @@ The application now displays the total number of property listings associated wi
 - Using the ProfileSerializer to include a `seller_listings` field that returns all listings for the user.
 - Rendering a count indicator (e.g., "No Property", "One Property listed", or "X Properties") on both the Profile and Agencies pages.
 - Enabling users to quickly see how many listings they have as part of their profile overview.
-```````
+`````````
