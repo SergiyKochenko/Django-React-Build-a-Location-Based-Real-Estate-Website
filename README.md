@@ -92,6 +92,7 @@ I will be using:
     - [How to Build \& Test](#how-to-build--test-2)
   - [Displaying Information about the Property Listing](#displaying-information-about-the-property-listing)
   - [Displaying Information about the Seller](#displaying-information-about-the-seller)
+  - [Displaying the Points of Interest on the Map](#displaying-the-points-of-interest-on-the-map)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -557,6 +558,15 @@ The application now prominently displays seller information across several pages
 - A summary of the number of property listings posted by the seller.
 - This information appears on the Profile, Agency Detail, and Agencies pages to help users quickly assess seller credibility.
 
+## Displaying the Points of Interest on the Map
+
+Both the Listings and Listing Detail pages now display points of interest (POIs) such as stadiums, hospitals, and universities. Key points include:
+- Custom icons are defined for each POI type.
+- POIs are fetched as part of the listing details.
+- Each POI is rendered on the map using React-Leaflet’s Marker and Popup components.
+- Distance from the property is calculated and displayed in the popup for each POI.
+- This feature enhances the user experience by providing geographic context to nearby amenities.
+
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
 - **Testing:**
@@ -938,4 +948,4 @@ The application now displays the total number of property listings associated wi
 - Using the ProfileSerializer to include a `seller_listings` field that returns all listings for the user.
 - Rendering a count indicator (e.g., "No Property", "One Property listed", or "X Properties") on both the Profile and Agencies pages.
 - Enabling users to quickly see how many listings they have as part of their profile overview.
-`````````
+```````````
