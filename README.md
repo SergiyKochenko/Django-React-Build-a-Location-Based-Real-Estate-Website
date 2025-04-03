@@ -93,6 +93,7 @@ I will be using:
   - [Displaying Information about the Property Listing](#displaying-information-about-the-property-listing)
   - [Displaying Information about the Seller](#displaying-information-about-the-seller)
   - [Displaying the Points of Interest on the Map](#displaying-the-points-of-interest-on-the-map)
+  - [Deleting a Property from the Frontend by the Seller](#deleting-a-property-from-the-frontend-by-the-seller)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -567,6 +568,14 @@ Both the Listings and Listing Detail pages now display points of interest (POIs)
 - Distance from the property is calculated and displayed in the popup for each POI.
 - This feature enhances the user experience by providing geographic context to nearby amenities.
 
+## Deleting a Property from the Frontend by the Seller
+
+Sellers can delete a property directly from the Listing Detail page if they are the owner. Key steps include:
+- A "Delete" button is displayed only if the current user's ID matches the seller's ID.
+- Upon clicking the Delete button, a confirmation dialog is shown.
+- If confirmed, a DELETE request is sent to the backend API at `/api/listings/<id>/delete/`.
+- Upon successful deletion, the seller is redirected to the Listings page to view their updated properties.
+
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
 - **Testing:**
@@ -948,4 +957,4 @@ The application now displays the total number of property listings associated wi
 - Using the ProfileSerializer to include a `seller_listings` field that returns all listings for the user.
 - Rendering a count indicator (e.g., "No Property", "One Property listed", or "X Properties") on both the Profile and Agencies pages.
 - Enabling users to quickly see how many listings they have as part of their profile overview.
-```````````
+`````````````
