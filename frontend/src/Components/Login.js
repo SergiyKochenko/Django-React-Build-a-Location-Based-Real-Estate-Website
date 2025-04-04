@@ -229,13 +229,13 @@ function Login() {
                     <Typography variant='small'>Don't have an account yet? <span onClick={() => navigate('/register')} style={{cursor: 'pointer', color: 'blue'}}>SIGN UP</span></Typography>
                 </Grid>
                 <Snackbar
-                                open={state.openSnack}
-                                message="You have successfully logged in"
-                                anchorOrigin={{
-                                    vertical: "bottom",
-                                    horizontal: "center",
-                                }}
-                            />
+                    open={state.openSnack}
+                    message="You have successfully logged in"
+                    anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "center",
+                    }}
+                />
         </div>
   )
 }

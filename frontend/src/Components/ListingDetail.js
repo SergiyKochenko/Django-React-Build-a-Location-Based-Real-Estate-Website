@@ -39,6 +39,7 @@ import {
     Breadcrumbs,
     Link,
     Dialog,
+    Snackbar,
 } from '@mui/material';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
@@ -102,6 +103,8 @@ function ListingDetail() {
             dataIsLoading: true,
             listingInfo: "",
             sellerProfileInfo: "",
+            openSnack: false,
+            disabledBtn: false,
         };
     
         function ReducerFunction(draft, action) {
@@ -114,7 +117,16 @@ function ListingDetail() {
                     break;
                 case 'catchSellerProfileInfo':
                     draft.sellerProfileInfo = action.profileObject;
-                    break;    
+                    break;  
+                case 'openTheSnack': 
+                    draft.openSnack = true;
+                    break;
+                case 'disableTheButton':
+                    draft.disabledBtn = true;
+                    break; 
+                case 'allowTheButton':
+                    draft.disabledBtn = false;
+                    break;
                 default:
                     break;
             }
@@ -196,12 +208,22 @@ function ListingDetail() {
         try {
           const response = await Axios.delete(`http://127.0.0.1:8000/api/listings/${params.id}/delete/`)
             console.log(response.data);
-            navigate('/listings');
+            dispatch({type: 'openTheSnack'});
+            dispatch({type: 'disableTheButton'});
         } catch (e) {
+        dispatch({type: 'allowTheButton'});
         console.log(e.response.data);
        }
        }
     }
+
+    useEffect(() => {
+                if (state.openSnack) {
+                    setTimeout(() => {
+                        navigate("/listings");
+                    }, 1500);
+                }
+            }, [state.openSnack, navigate]);
 
     const [open, setOpen] = React.useState(false);
 
@@ -384,7 +406,7 @@ return (
                           </Grid>
                           {GlobalState.userId == state.listingInfo.seller ? (<Grid item container justifyContent='space-around'>
                                 <Button variant='contained' color='primary' onClick={handleClickOpen}>Update</Button>
-                                <Button variant='contained' color='error' onClick={DeleteHandler}>Delete</Button>
+                                <Button variant='contained' color='error' onClick={DeleteHandler} disabled={state.disabledBtn}>Delete</Button>
 
 
 
@@ -499,6 +521,15 @@ return (
                             </MapContainer>
                         </Grid>
                     </Grid>
+
+                    <Snackbar
+                        open={state.openSnack}
+                        message="Listing Deleted Successfully"
+                        anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "center",
+                        }}
+                    />
     </div>
 )
 }
