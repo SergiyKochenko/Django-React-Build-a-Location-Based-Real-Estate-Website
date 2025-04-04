@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, use } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useImmerReducer } from 'use-immer'
 import Axios from 'axios'
@@ -14,6 +14,7 @@ import {
   CardContent,
   CircularProgress,
   TextField,
+  Snackbar,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 
@@ -51,6 +52,8 @@ function Login() {
         passwordValue: '',
         sendRequest: 0,
         token: '',
+        openSnack: false,
+        disabledBtn: false,
     }
     
     function ReducerFunction(draft, action) {
@@ -70,6 +73,18 @@ function Login() {
             case 'cacheToken':
                 draft.token = action.tokenValue;
                 break
+
+            case "openTheSnack":
+				draft.openSnack = true;
+				break;
+
+            case 'disableTheButton':
+                draft.disabledBtn = true;
+                break
+
+            case 'allowTheButton':
+                draft.disabledBtn = false;
+                break
                 
             default:
                 break
@@ -82,6 +97,7 @@ function Login() {
         e.preventDefault()
         console.log('Form Submitted')
         dispatch({type: 'changeSendRequest'})
+        dispatch({type: 'disableTheButton'})
     }
 
     useEffect(() => {
@@ -100,9 +116,10 @@ function Login() {
             console.log(response)
             dispatch({type: 'cacheToken', tokenValue: response.data.auth_token})
             GlobalDispatch({type: 'cacheToken', tokenValue: response.data.auth_token})
-            navigate('/')
+            // navigate('/')
         } catch (error) {
             console.log(error.response)
+            dispatch({type: 'allowTheButton'})
         }
         }
         SignIn()
@@ -133,7 +150,7 @@ function Login() {
                 emailInfo: response.data.email, 
                 idInfo: response.data.id
             })
-            navigate('/')
+            dispatch({ type: "openTheSnack" });
         } catch (error) {
             console.log(error.response)
         }
@@ -143,7 +160,15 @@ function Login() {
         source.cancel()
         }
         }
-    }, [state.token, GlobalDispatch, navigate])
+    }, [state.token, GlobalDispatch, navigate, dispatch])
+
+    useEffect(() => {
+            if (state.openSnack) {
+                setTimeout(() => {
+                    navigate("/");
+                }, 3000);
+            }
+        }, [state.openSnack, navigate]);
 
     return (
         <div className={classes.formContainer}>
@@ -193,7 +218,8 @@ function Login() {
                     color='primary' 
                     fullWidth
                     type='submit'
-                    className={classes.loginBtn}>
+                    className={classes.loginBtn}
+                    disabled={state.disabledBtn}>
                         Sign In
                     </Button>
             </Grid>
@@ -202,6 +228,14 @@ function Login() {
             <Grid item container justifyContent={'center'} style={{marginTop: '1rem'}}>
                     <Typography variant='small'>Don't have an account yet? <span onClick={() => navigate('/register')} style={{cursor: 'pointer', color: 'blue'}}>SIGN UP</span></Typography>
                 </Grid>
+                <Snackbar
+                                open={state.openSnack}
+                                message="You have successfully logged in"
+                                anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "center",
+                                }}
+                            />
         </div>
   )
 }
