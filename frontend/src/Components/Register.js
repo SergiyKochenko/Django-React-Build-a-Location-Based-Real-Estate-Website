@@ -15,6 +15,7 @@ import {
   CardContent,
   CircularProgress,
   TextField,
+  Snackbar,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 
@@ -48,6 +49,8 @@ function Register() {
         passwordValue: '',
         password2Value: '',
         sendRequest: 0,
+        openSnack: false,
+        disabledBtn: false,
     }
     
     function ReducerFunction(draft, action) {
@@ -67,6 +70,17 @@ function Register() {
             case 'changeSendRequest':
                 draft.sendRequest = draft.sendRequest + 1;
                 break
+            case "openTheSnack":
+				draft.openSnack = true;
+				break;
+
+            case 'disableTheButton':
+                draft.disabledBtn = true;
+                break
+
+            case 'allowTheButton':
+                draft.disabledBtn = false;
+                break
             default:
                 break
             }
@@ -78,6 +92,7 @@ function Register() {
         e.preventDefault()
         console.log('Form Submitted')
         dispatch({type: 'changeSendRequest'})
+        dispatch({type: 'disableTheButton'})
     }
 
     useEffect(() => {
@@ -96,8 +111,9 @@ function Register() {
             cancelToken: source.token
             })
             console.log(response)
-            navigate('/')
+            dispatch({ type: "openTheSnack" });
         } catch (error) {
+            dispatch({type: 'allowTheButton'})
             console.log(error.response)
         }
         }
@@ -106,7 +122,16 @@ function Register() {
         source.cancel()
         }
         }
-    }, [state.sendRequest, navigate, state.usernameValue, state.emailValue, state.passwordValue, state.password2Value])
+    }, [state.sendRequest, navigate, state.usernameValue, state.emailValue, state.passwordValue, state.password2Value, dispatch])
+
+    useEffect(() => {
+                if (state.openSnack) {
+                    setTimeout(() => {
+                        navigate("/");
+                    }, 3000);
+                }
+            }, [state.openSnack, navigate]);
+
     return (
         <div className={classes.formContainer}>
             <form onSubmit={FormSubmit}>
@@ -165,7 +190,8 @@ function Register() {
                     color='primary' 
                     fullWidth
                     type='submit'
-                    className={classes.registerBtn}>
+                    className={classes.registerBtn}
+                    disabled={state.disabledBtn}>
                         Sign Up
                     </Button>
             </Grid>
@@ -174,6 +200,14 @@ function Register() {
             <Grid item container justifyContent={'center'} style={{marginTop: '1rem'}}>
                     <Typography variant='small'>Already have an account? <span onClick={() => navigate('/login')} style={{cursor: 'pointer', color: 'blue'}}>SIGN IN</span></Typography>
                 </Grid>
+                <Snackbar
+                    open={state.openSnack}
+                    message="Account Created Successfully"
+                    anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "center",
+                    }}
+                />
         </div>
   )
 }
