@@ -166,7 +166,7 @@ function Login() {
             if (state.openSnack) {
                 setTimeout(() => {
                     navigate("/");
-                }, 3000);
+                }, 1500);
             }
         }, [state.openSnack, navigate]);
 

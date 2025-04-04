@@ -7,7 +7,7 @@ import { useImmerReducer } from 'use-immer';
 import StateContext from '../Contexts/StateContext';
 
 // Material UI
-import { Grid, AppBar, Typography, Button, Card, CardHeader, CardMedia, CardContent, CircularProgress, TextField, FormControlLabel, Checkbox } from '@mui/material';
+import { Grid, AppBar, Typography, Button, Card, CardHeader, CardMedia, CardContent, CircularProgress, TextField, FormControlLabel, Checkbox, Snackbar } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
@@ -76,6 +76,8 @@ function ListingUpdate(props) {
         cctvValue: props.listingData.cctv,
         parkingValue: props.listingData.parking,
         sendRequest: 0,
+        openSnack: false,
+        disabledBtn: false,
     };
 
     function ReducerFunction(draft, action) {
@@ -120,6 +122,15 @@ function ListingUpdate(props) {
             case 'changeSendRequest':
                 draft.sendRequest = draft.sendRequest + 1;
                 break;
+            case "openTheSnack":
+                draft.openSnack = true;
+                break;
+            case 'disableTheButton':
+                draft.disabledBtn = true;
+                break;
+            case 'allowTheButton':
+                draft.disabledBtn = false;
+                break;
             default:
                 break;
         }
@@ -132,6 +143,7 @@ function ListingUpdate(props) {
         e.preventDefault();
         console.log('Form Submitted');
         dispatch({type: 'changeSendRequest'})
+        dispatch({type: 'disableTheButton'})
     }
 
     useEffect(() => {
@@ -171,14 +183,40 @@ function ListingUpdate(props) {
                 try {
                     const response = await Axios.patch(`http://127.0.0.1:8000/api/listings/${props.listingData.id}/update/`, formData);
                     console.log(response.data);
-                    navigate(0);
+                    dispatch({ type: 'openTheSnack' });
                 } catch (e) {
                     console.log(e.response);
+                    dispatch({ type: 'allowTheButton' });
                 }
             }
             UpdateProperty();
         }
-    }, [state.sendRequest]);
+    }, [
+        state.sendRequest,
+        state.titleValue,
+        state.listingTypeValue,
+        state.descriptionValue,
+        state.propertyStatusValue,
+        state.priceValue,
+        state.rentalFrequencyValue,
+        state.roomsValue,
+        state.furnishedValue,
+        state.poolValue,
+        state.elevatorValue,
+        state.cctvValue,
+        state.parkingValue,
+        GlobalState.userId,
+        props.listingData.id,
+        dispatch,
+    ]);
+
+    useEffect(() => {
+                if (state.openSnack) {
+                    setTimeout(() => {
+                        navigate(0);
+                    }, 1500);
+                }
+            }, [state.openSnack, navigate]);
 
     function PriceDisplay() {
         if (state.propertyStatusValue === 'Rent' && state.rentalFrequencyValue === 'Day') {
@@ -427,12 +465,21 @@ function ListingUpdate(props) {
                     fullWidth
                     type='submit'
                     className={classes.registerBtn}
+                    disabled={state.disabledBtn}
                 >
                     UPDATE
                 </Button>
                 </Grid>
             </form>
             <Button variant='contained' onClick={props.closeDialog}>CANCEL</Button>
+            <Snackbar
+                open={state.openSnack}
+                message="You have successfully updated the listing"
+                anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "center",
+                }}
+            />
         </div>
     );
 }
