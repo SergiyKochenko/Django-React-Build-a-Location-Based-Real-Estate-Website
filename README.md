@@ -94,6 +94,7 @@ I will be using:
   - [Displaying Information about the Seller](#displaying-information-about-the-seller)
   - [Displaying the Points of Interest on the Map](#displaying-the-points-of-interest-on-the-map)
   - [Deleting a Property from the Frontend by the Seller](#deleting-a-property-from-the-frontend-by-the-seller)
+  - [Updating a Property from the Frontend](#updating-a-property-from-the-frontend)
   - [Usage](#usage)
   - [Deployment](#deployment)
   - [Credits](#credits)
@@ -576,6 +577,11 @@ Sellers can delete a property directly from the Listing Detail page if they are 
 - If confirmed, a DELETE request is sent to the backend API at `/api/listings/<id>/delete/`.
 - Upon successful deletion, the seller is redirected to the Listings page to view their updated properties.
 
+## Updating a Property from the Frontend
+
+Sellers can update their property details directly from the frontend. In the Listing Detail page, an “Update” button (visible only for properties owned by the seller) opens a dialog containing an update form. This form (implemented in ListingUpdate.js) lets sellers modify fields such as title, description, listing type, price, and amenities.  
+When submitted, a PATCH request is sent to the backend API to update the listing, and upon success, the user interface is refreshed to reflect the changes.
+
 ## Usage
 - **Development Mode:** Both Django and React servers run concurrently to provide a live development environment.
 - **Testing:**
@@ -957,4 +963,4 @@ The application now displays the total number of property listings associated wi
 - Using the ProfileSerializer to include a `seller_listings` field that returns all listings for the user.
 - Rendering a count indicator (e.g., "No Property", "One Property listed", or "X Properties") on both the Profile and Agencies pages.
 - Enabling users to quickly see how many listings they have as part of their profile overview.
-`````````````
+``````````````
