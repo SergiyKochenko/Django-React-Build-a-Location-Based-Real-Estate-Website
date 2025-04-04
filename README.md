@@ -156,6 +156,7 @@ The application is designed with a focus on usability and a seamless user journe
 - **Deployment Ready:** Configured for production with Create React App optimizations.
 - **Uploading images functionality added:** Users can upload up to 5 images per property.
 - **Login page feedback:** A Snackbar message now informs users of successful login.
+- **Register page feedback:** A message now informs users of successful account registration.
 
 ## Technologies Used
 - **Front-End:** React, Create React App
@@ -964,4 +965,4 @@ The application now displays the total number of property listings associated wi
 - Using the ProfileSerializer to include a `seller_listings` field that returns all listings for the user.
 - Rendering a count indicator (e.g., "No Property", "One Property listed", or "X Properties") on both the Profile and Agencies pages.
 - Enabling users to quickly see how many listings they have as part of their profile overview.
-```````````````
+`````````````````
