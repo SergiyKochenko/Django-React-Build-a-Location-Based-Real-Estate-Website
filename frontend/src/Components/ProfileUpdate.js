@@ -19,7 +19,8 @@ import {
     CircularProgress, 
     TextField, 
     FormControlLabel, 
-    Checkbox 
+    Checkbox,
+    Snackbar,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
@@ -64,6 +65,8 @@ function ProfileUpdate(props) {
             pictureValue: [],
             profilePictureValue: props.userProfile.profilePic,
             sendRequest: 0,
+            openSnack: false,
+            disabledBtn: false,
         };
     
         function ReducerFunction(draft, action) {
@@ -85,6 +88,15 @@ function ProfileUpdate(props) {
                     break;
                 case 'catchSendRequest':
                     draft.sendRequest = draft.sendRequest + 1;
+                    break;
+                case 'openTheSnack':
+                    draft.openSnack = true;
+                    break;
+                case 'disableTheButton':
+                    draft.disabledBtn = true;
+                    break;
+                case 'allowTheButton':
+                    draft.disabledBtn = false;
                     break;            
                 default:
                     break;
@@ -100,7 +112,7 @@ function ProfileUpdate(props) {
                     profilePictureChosen: state.pictureValue[0],
                 });
             }
-        }, [state.pictureValue]);
+        }, [state.pictureValue, dispatch]);
 
     // use effect to send the form data to the backend
 
@@ -128,19 +140,39 @@ function ProfileUpdate(props) {
                         formData
                     );
                     console.log(response.data);
-                    navigate(0);
+                    dispatch({ type: 'openTheSnack' });
                 } catch (e) {
                     console.log(e.response);
+                    dispatch({ type: 'allowTheButton' });
                 }
             }
             UpdateProfile();
         }
-    }, [state.sendRequest]);
+    }, [
+        state.sendRequest,
+        state.agencyNameValue,
+        state.phoneNumberValue,
+        state.bioValue,
+        state.profilePictureValue,
+        GlobalState.userId,
+        dispatch,
+    ]);
+
+    useEffect(() => {
+        if (state.openSnack) {
+            setTimeout(() => {
+                navigate(0);
+            }, 1500);
+        }
+    }, [state.openSnack, navigate]);
 
     function FormSubmit(e) {
         e.preventDefault();
         dispatch({
             type: 'catchSendRequest',
+        });
+        dispatch({
+            type: 'disableTheButton',
         });
     }
 
@@ -259,12 +291,21 @@ function ProfileUpdate(props) {
                           color='primary' 
                           fullWidth
                           type='submit'
-                          className={classes.loginBtn}>
+                          className={classes.loginBtn}
+                          disabled={state.disabledBtn}>
                             UPDATE PROFILE
                           </Button>
                   </Grid>
                   
                   </form>
+                  <Snackbar
+                    open={state.openSnack}
+                    message="Profile updated successfully!"
+                    anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "center",
+                    }}
+                />
               </div>
     </>
   )
