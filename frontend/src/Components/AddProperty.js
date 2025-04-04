@@ -1,10 +1,16 @@
-import React, { useEffect, useState, useRef, useMemo, useContext } from 'react';
+import React, { useEffect, useState, useRef, useMemo, useContext, use } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import { useImmerReducer } from 'use-immer';
 
 // React Leaflet
-import { MapContainer, TileLayer, Marker, useMap, Polygon } from 'react-leaflet';
+import { 
+    MapContainer,
+    TileLayer, 
+    Marker, 
+    useMap, 
+    Polygon,
+ } from 'react-leaflet';
 
 // Context API
 import StateContext from '../Contexts/StateContext';
@@ -45,7 +51,21 @@ import Sutton from "./Assets/Boroughs/Sutton";
 import Waltham from "./Assets/Boroughs/Waltham";
 
 // Material UI
-import { Grid, AppBar, Typography, Button, Card, CardHeader, CardMedia, CardContent, CircularProgress, TextField, FormControlLabel, Checkbox } from '@mui/material';
+import { 
+    Grid, 
+    AppBar, 
+    Typography, 
+    Button, 
+    Card, 
+    CardHeader, 
+    CardMedia, 
+    CardContent, 
+    CircularProgress, 
+    TextField, 
+    FormControlLabel, 
+    Checkbox,
+    Snackbar,
+} from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
@@ -180,6 +200,8 @@ function AddProperty() {
             agencyName: '',
             phoneNumber: '',
         },
+        openSnack: false,
+        disabledBtn: false,
     };
 
     function ReducerFunction(draft, action) {
@@ -267,6 +289,18 @@ function AddProperty() {
                 draft.userProfile.agencyName = action.profileObject.agency_name;
                 draft.userProfile.phoneNumber = action.profileObject.phone_number;
                 break;
+
+            case "openTheSnack":
+				draft.openSnack = true;
+				break;
+
+            case 'disableTheButton':
+                draft.disabledBtn = true;
+                break
+
+            case 'allowTheButton':
+                draft.disabledBtn = false;
+                break
             default:
                 break;
         }
@@ -669,6 +703,7 @@ function AddProperty() {
         e.preventDefault();
         console.log('Form Submitted');
         dispatch({type: 'changeSendRequest'})
+        dispatch({type: 'disableTheButton'});
     }
 
     useEffect(() => {
@@ -700,14 +735,40 @@ function AddProperty() {
                 try {
                     const response = await Axios.post('http://127.0.0.1:8000/api/listings/create/', formData);
                     console.log(response.data);
-                    navigate('/listings');
+                    dispatch({type: 'openTheSnack'});
                 } catch (e) {
+                    dispatch({type: 'allowTheButton'});
                     console.log(e.response);
                 }
             }
             AddProperty();
         }
-    }, [state.sendRequest]);
+    }, [
+        state.sendRequest,
+        dispatch,
+        state.titleValue,
+        state.descriptionValue,
+        state.areaValue,
+        state.boroughValue,
+        state.listingTypeValue,
+        state.propertyStatusValue,
+        state.priceValue,
+        state.rentalFrequencyValue,
+        state.roomsValue,
+        state.furnishedValue,
+        state.poolValue,
+        state.elevatorValue,
+        state.cctvValue,
+        state.parkingValue,
+        state.latitudeValue,
+        state.longitudeValue,
+        state.picture1Value,
+        state.picture2Value,
+        state.picture3Value,
+        state.picture4Value,
+        state.picture5Value,
+        GlobalState.userId,
+    ]);
 
     function PriceDisplay() {
         if (state.propertyStatusValue === 'Rent' && state.rentalFrequencyValue === 'Day') {
@@ -730,6 +791,7 @@ function AddProperty() {
                     fullWidth
                     type='submit'
                     className={classes.registerBtn}
+                    disabled={state.disabledBtn}
                 >
                     SUBMIT
                 </Button>
@@ -763,6 +825,16 @@ function AddProperty() {
             );
         }
     }
+
+    useEffect(() => {
+        if (state.openSnack) {
+            setTimeout(() => {
+                dispatch({type: 'allowTheButton'});
+                navigate('/listings');
+            }, 3000);
+        }
+    }, [state.openSnack, dispatch, navigate]);
+
 
     return (
         <div className={classes.formContainer}>
@@ -1111,9 +1183,14 @@ function AddProperty() {
                 {SubmitButtomDisplay()}
                 </Grid>
             </form>
-            <Button onClick={() => console.log(state.uploadedPictures)}>
-                TEST BUTTON
-            </Button>
+            <Snackbar
+                open={state.openSnack}
+                message="Property Added Successfully"
+                anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "center",
+                }}
+            />
         </div>
     );
 }
