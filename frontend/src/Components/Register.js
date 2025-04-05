@@ -55,6 +55,10 @@ function Register() {
             hasErrors: false,
             errorMessage: '',
         },
+        emailErrors: {
+            hasErrors: false,
+            errorMessage: '',
+        },
     }
     
     function ReducerFunction(draft, action) {
@@ -66,6 +70,8 @@ function Register() {
                 break
             case 'catchEmailChange':
                 draft.emailValue = action.emailChosen;
+                draft.emailErrors.hasErrors = false
+                draft.emailErrors.errorMessage = ''
                 break
             case 'catchPasswordChange':
                 draft.passwordValue = action.passwordChosen;
@@ -102,6 +108,14 @@ function Register() {
                     draft.usernameErrors.errorMessage = 'This field must not contain special characters'
                 }
                 break
+
+            case 'catchEmailErrors':
+                if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(action.emailChosen)){
+                    draft.emailErrors.hasErrors = true
+                    draft.emailErrors.errorMessage = 'Please enter a valid email address'
+                }
+                break
+                
             default:
                 break
             }
@@ -181,6 +195,9 @@ function Register() {
                     fullWidth
                     value={state.emailValue}
                     onChange = {(e) => dispatch({type: 'catchEmailChange', emailChosen: e.target.value})}
+                    onBlur = {(e) => dispatch({type: 'catchEmailErrors', emailChosen: e.target.value})}
+                    error={state.emailErrors.hasErrors ? true : false}
+                    helperText={state.emailErrors.errorMessage}
                      />
             </Grid>
             <Grid item container style={{marginTop: '1rem'}}>
