@@ -51,12 +51,18 @@ function Register() {
         sendRequest: 0,
         openSnack: false,
         disabledBtn: false,
+        usernameErrors: {
+            hasErrors: false,
+            errorMessage: '',
+        },
     }
     
     function ReducerFunction(draft, action) {
         switch (action.type) {
             case 'catchUsernameChange':
                 draft.usernameValue = action.usernameChosen;
+                draft.usernameErrors.hasErrors = false
+                draft.usernameErrors.errorMessage = ''
                 break
             case 'catchEmailChange':
                 draft.emailValue = action.emailChosen;
@@ -80,6 +86,21 @@ function Register() {
 
             case 'allowTheButton':
                 draft.disabledBtn = false;
+                break
+
+            case 'catchUsernameErrors':
+                if (action.usernameChosen.length === 0){
+                    draft.usernameErrors.hasErrors = true
+                    draft.usernameErrors.errorMessage = 'Username cannot be empty'
+                }
+                else if (action.usernameChosen.length < 5){
+                    draft.usernameErrors.hasErrors = true
+                    draft.usernameErrors.errorMessage = 'Username must be at least 5 characters long'
+                }
+                else if (!/^([a-zA-Z0-9]+)$/.test(action.usernameChosen)){
+                    draft.usernameErrors.hasErrors = true
+                    draft.usernameErrors.errorMessage = 'This field must not contain special characters'
+                }
                 break
             default:
                 break
@@ -146,7 +167,11 @@ function Register() {
                     variant='outlined' 
                     fullWidth
                     value={state.usernameValue}
-                    onChange = {(e) => dispatch({type: 'catchUsernameChange', usernameChosen: e.target.value})} />
+                    onChange = {(e) => dispatch({type: 'catchUsernameChange', usernameChosen: e.target.value})}
+                    onBlur = {(e) => dispatch({type: 'catchUsernameErrors', usernameChosen: e.target.value})}
+                    error={state.usernameErrors.hasErrors ? true : false}
+                    helperText={state.usernameErrors.errorMessage}
+                        />
             </Grid>
             <Grid item container style={{marginTop: '1rem'}}>
                 <TextField 
