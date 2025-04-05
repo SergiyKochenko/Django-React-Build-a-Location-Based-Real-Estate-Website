@@ -158,6 +158,7 @@ The application is designed with a focus on usability and a seamless user journe
 - **Login page feedback:** A Snackbar message now informs users of successful login.
 - **Login page error validation:** An error message is displayed when invalid credentials are entered.
 - **Register page feedback:** A message now informs users of successful account registration.
+- **Register page client-side validation:** The username field is validated for emptiness, minimum length, and forbidden characters, displaying appropriate error messages.
 - **My Profile Update page feedback:** A message now informs users of successful profile update.
 - **Update Listing page feedback:** A message now informs users of successful listing update.
 - **Add Property page feedback:** A message now informs users of successful property addition.
