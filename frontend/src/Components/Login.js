@@ -15,6 +15,7 @@ import {
   CircularProgress,
   TextField,
   Snackbar,
+  Alert,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 
@@ -54,16 +55,19 @@ function Login() {
         token: '',
         openSnack: false,
         disabledBtn: false,
+        serverError: false,
     }
     
     function ReducerFunction(draft, action) {
         switch (action.type) {
             case 'catchUsernameChange':
                 draft.usernameValue = action.usernameChosen;
+                draft.serverError = false;
                 break
                 
             case 'catchPasswordChange':
                 draft.passwordValue = action.passwordChosen;
+                draft.serverError = false;
                 break
 
             case 'changeSendRequest':
@@ -84,6 +88,10 @@ function Login() {
 
             case 'allowTheButton':
                 draft.disabledBtn = false;
+                break
+
+            case 'catchServerError':
+                draft.serverError = true;
                 break
                 
             default:
@@ -120,6 +128,7 @@ function Login() {
         } catch (error) {
             console.log(error.response)
             dispatch({type: 'allowTheButton'})
+            dispatch({type: 'catchServerError'})
         }
         }
         SignIn()
@@ -177,6 +186,10 @@ function Login() {
                     <Typography variant='h4'>SIGN IN</Typography>
                 </Grid>
 
+                {state.serverError ? (<Alert severity="error">Incorrect username or password!</Alert>) : ('')}
+
+                
+
             <Grid item container style={{marginTop: '1rem'}}>
                 <TextField 
                     id="username" 
@@ -190,6 +203,7 @@ function Login() {
                             usernameChosen: e.target.value,
                         })
                     }
+                    error = {state.serverError ? true : false}
                      />
             </Grid>
             <Grid item container style={{marginTop: '1rem'}}>
@@ -206,6 +220,7 @@ function Login() {
                             passwordChosen: e.target.value,
                         })
                     }
+                    error = {state.serverError ? true : false}
                      />
             </Grid>
             <Grid 
