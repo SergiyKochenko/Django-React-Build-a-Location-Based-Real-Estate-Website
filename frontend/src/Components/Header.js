@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'
 
 // Material UI
-import { Button, Typography, Grid, AppBar, Toolbar, Menu, MenuItem } from '@mui/material'
+import { Button, Typography, Grid, AppBar, Toolbar, Menu, MenuItem, Snackbar } from '@mui/material'
 import { makeStyles } from '@mui/styles';
 
 // Contexts
@@ -83,6 +83,8 @@ function Header() {
       navigate('/profile');
     }
 
+    const [openSnack, setOpenSnack] = useState(false);
+
   async function HandleLogout() {
     setAnchorEl(null);
     const confirmLogout = window.confirm('Are you sure you want to logout?');
@@ -95,12 +97,21 @@ function Header() {
     );
     console.log(response);
     GlobalDispatch({type: 'logout'});
-    navigate('/');
+    setOpenSnack(true);
     } catch (e) {
       console.log(e.response);
     }
     }
   }
+
+  useEffect(() => {
+      if (openSnack) {
+          setTimeout(() => {
+              navigate(0);
+          }, 1500);
+      }
+  }, [openSnack, navigate]);
+
   return (
     <AppBar position="static" style={{ backgroundColor: 'black' }}>
         <Toolbar>
@@ -142,6 +153,15 @@ function Header() {
         <MenuItem className={classes.profileBtn} onClick={HandleProfile}>Profile</MenuItem>
         <MenuItem className={classes.logoutBtn} onClick={HandleLogout}>Logout</MenuItem>
       </Menu>
+
+                      <Snackbar
+                          open={openSnack}
+                          message="You have successfully logged out"
+                          anchorOrigin={{
+                              vertical: "bottom",
+                              horizontal: "center",
+                          }}
+                      />
             
           </div>
         </Toolbar>
