@@ -160,7 +160,8 @@ The application is designed with a focus on usability and a seamless user journe
 - **My Profile Update page feedback:** A message now informs users of successful profile update.
 - **Update Listing page feedback:** A message now informs users of successful listing update.
 - **Add Property page feedback:** A message now informs users of successful property addition.
-- **Add Listing delete page feedback:** A message now informs users of successful property addition.
+- **Listing Delete page feedback:** A message now informs users of successful property deletion.
+- **User Logout page feedback:** A message now informs users of successful user logout.
 
 ## Technologies Used
 - **Front-End:** React, Create React App
@@ -969,4 +970,4 @@ The application now displays the total number of property listings associated wi
 - Using the ProfileSerializer to include a `seller_listings` field that returns all listings for the user.
 - Rendering a count indicator (e.g., "No Property", "One Property listed", or "X Properties") on both the Profile and Agencies pages.
 - Enabling users to quickly see how many listings they have as part of their profile overview.
-`````````````````````
+```````````````````````
