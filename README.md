@@ -162,6 +162,7 @@ The application is designed with a focus on usability and a seamless user journe
 - **Register page client-side email validation:** The email field is validated for proper format, and an error message is displayed if the email is invalid.
 - **Register page client-side password validation:** The password field is validated for a minimum of 8 characters, displaying an error message if the requirement is not met.
 - **Register page client-side password retype validation:** The confirmed password is validated to match the original password, displaying an error message if they do not match.
+- **Register page server error handling:** A server error message is displayed if the username or email already exists.
 - **My Profile Update page feedback:** A message now informs users of successful profile update.
 - **Update Listing page feedback:** A message now informs users of successful listing update.
 - **Add Property page feedback:** A message now informs users of successful property addition.
@@ -975,5 +976,3 @@ The application now displays the total number of property listings associated wi
 - Using the ProfileSerializer to include a `seller_listings` field that returns all listings for the user.
 - Rendering a count indicator (e.g., "No Property", "One Property listed", or "X Properties") on both the Profile and Agencies pages.
 - Enabling users to quickly see how many listings they have as part of their profile overview.
-
-
