@@ -16,6 +16,7 @@ import {
   CircularProgress,
   TextField,
   Snackbar,
+  Alert,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 
@@ -64,6 +65,8 @@ function Register() {
             errorMessage: '',
         },
         password2HelperText: '',
+        serverMessageUsername: '',
+        serverMessageEmail: '',
     }
     
     function ReducerFunction(draft, action) {
@@ -72,11 +75,13 @@ function Register() {
                 draft.usernameValue = action.usernameChosen;
                 draft.usernameErrors.hasErrors = false
                 draft.usernameErrors.errorMessage = ''
+                draft.serverMessageUsername = ''
                 break
             case 'catchEmailChange':
                 draft.emailValue = action.emailChosen;
                 draft.emailErrors.hasErrors = false
                 draft.emailErrors.errorMessage = ''
+                draft.serverMessageEmail = ''
                 break
             case 'catchPasswordChange':
                 draft.passwordValue = action.passwordChosen;
@@ -126,15 +131,23 @@ function Register() {
             case 'catchEmailErrors':
                 if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(action.emailChosen)){
                     draft.emailErrors.hasErrors = true
-                    draft.emailErrors.errorMessage = 'Please enter a valid email address'
+                    draft.emailErrors.errorMessage = 'Please enter a valid email address!'
                 }
                 break
 
             case 'catchPasswordErrors':
                 if (action.passwordChosen.length < 8){
                     draft.passwordErrors.hasErrors = true
-                    draft.passwordErrors.errorMessage = 'Password must be at least 8 characters long'
+                    draft.passwordErrors.errorMessage = 'Password must be at least 8 characters long!'
                 }
+                break
+
+            case 'usernameExists':
+                draft.serverMessageUsername = 'This username already exists!'
+                break
+
+            case 'emailExists':
+                draft.serverMessageEmail = 'This email already exists!'
                 break
                 
             default:
@@ -173,6 +186,12 @@ function Register() {
         } catch (error) {
             dispatch({type: 'allowTheButton'})
             console.log(error.response)
+            if (error.response.data.username){
+                dispatch({type: 'usernameExists'})
+            }
+            else if (error.response.data.email){
+                dispatch({type: 'emailExists'})
+            }
         }
         }
         SignUp()
@@ -196,6 +215,10 @@ function Register() {
                 <Grid item container justifyContent={'center'}>
                     <Typography variant='h4'>CREATE AN ACCOUNT</Typography>
                 </Grid>
+            {state.serverMessageUsername ? (<Alert severity='error'>{state.serverMessageUsername}</Alert>) : ('')}
+
+            {state.serverMessageEmail ? (<Alert severity='error'>{state.serverMessageEmail}</Alert>) : ('')}
+            
 
             <Grid item container style={{marginTop: '1rem'}}>
                 <TextField 
