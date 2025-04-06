@@ -67,6 +67,9 @@ function Register() {
         password2HelperText: '',
         serverMessageUsername: '',
         serverMessageEmail: '',
+        serverMessageSimilarPassword: '',
+        serverMessageCommonPassword: '',
+        serverMessageNumericPassword: '',
     }
     
     function ReducerFunction(draft, action) {
@@ -87,6 +90,9 @@ function Register() {
                 draft.passwordValue = action.passwordChosen;
                 draft.passwordErrors.hasErrors = false
                 draft.passwordErrors.errorMessage = ''
+                draft.serverMessageSimilarPassword = ''
+                draft.serverMessageCommonPassword = ''
+                draft.serverMessageNumericPassword = ''
                 break
             case 'catchPassword2Change':
                 draft.password2Value = action.password2Chosen;
@@ -149,6 +155,18 @@ function Register() {
             case 'emailExists':
                 draft.serverMessageEmail = 'This email already exists!'
                 break
+
+            case 'similarPassword':
+                draft.serverMessageSimilarPassword = 'The password is too similar to the username!'
+                break
+
+            case 'commonPassword':
+                draft.serverMessageCommonPassword = 'This password is too common!'
+                break
+
+            case 'numericPassword':
+                draft.serverMessageNumericPassword = 'This password is entirely numeric!'
+                break
                 
             default:
                 break
@@ -167,39 +185,45 @@ function Register() {
     }
 
     useEffect(() => {
-        if (state.sendRequest){
-            const source = Axios.CancelToken.source()
-        async function SignUp () {
-        try {
-            const response = await Axios.post('http://127.0.0.1:8000/api-auth-djoser/users/', 
-                {
-                    username: state.usernameValue,
-                    email: state.emailValue,
-                    password: state.passwordValue,
-                    re_password: state.password2Value,
-                }, 
-                {
-            cancelToken: source.token
-            })
-            console.log(response)
-            dispatch({ type: "openTheSnack" });
-        } catch (error) {
-            dispatch({type: 'allowTheButton'})
-            console.log(error.response)
-            if (error.response.data.username){
-                dispatch({type: 'usernameExists'})
+        if (state.sendRequest) {
+            const source = Axios.CancelToken.source();
+            async function SignUp() {
+                try {
+                    const response = await Axios.post('http://127.0.0.1:8000/api-auth-djoser/users/', 
+                        {
+                            username: state.usernameValue,
+                            email: state.emailValue,
+                            password: state.passwordValue,
+                            re_password: state.password2Value,
+                        },
+                        { cancelToken: source.token }
+                    );
+                    console.log(response);
+                    dispatch({ type: "openTheSnack" });
+                } catch (error) {
+                    dispatch({ type: 'allowTheButton' });
+                    console.log(error);
+                    if (error.response && error.response.data) {
+                        if (error.response.data.username) {
+                            dispatch({ type: 'usernameExists' });
+                        } else if (error.response.data.email) {
+                            dispatch({ type: 'emailExists' });
+                        } else if (error.response.data.password[0] === 'The password is too similar to the username.') {
+                            dispatch({ type: 'similarPassword' });
+                        } else if (error.response.data.password[0] === 'This password is too common.') {
+                            dispatch({ type: 'commonPassword' });
+                        } else if (error.response.data.password[0] === 'This password is entirely numeric.') {
+                            dispatch({ type: 'numericPassword' });
+                        }
+                    }
+                }
             }
-            else if (error.response.data.email){
-                dispatch({type: 'emailExists'})
-            }
+            SignUp();
+            return () => {
+                source.cancel();
+            };
         }
-        }
-        SignUp()
-        return () => {
-        source.cancel()
-        }
-        }
-    }, [state.sendRequest, navigate, state.usernameValue, state.emailValue, state.passwordValue, state.password2Value, dispatch])
+    }, [state.sendRequest, navigate, state.usernameValue, state.emailValue, state.passwordValue, state.password2Value, dispatch]);
 
     useEffect(() => {
                 if (state.openSnack) {
@@ -218,6 +242,12 @@ function Register() {
             {state.serverMessageUsername ? (<Alert severity='error'>{state.serverMessageUsername}</Alert>) : ('')}
 
             {state.serverMessageEmail ? (<Alert severity='error'>{state.serverMessageEmail}</Alert>) : ('')}
+
+            {state.serverMessageSimilarPassword ? (<Alert severity='error'>{state.serverMessageSimilarPassword}</Alert>) : ('')}
+
+            {state.serverMessageCommonPassword ? (<Alert severity='error'>{state.serverMessageCommonPassword}</Alert>) : ('')}
+
+            {state.serverMessageNumericPassword ? (<Alert severity='error'>{state.serverMessageNumericPassword}</Alert>) : ('')}
             
 
             <Grid item container style={{marginTop: '1rem'}}>
