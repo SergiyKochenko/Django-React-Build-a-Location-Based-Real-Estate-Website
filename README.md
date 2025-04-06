@@ -160,6 +160,7 @@ The application is designed with a focus on usability and a seamless user journe
 - **Register page feedback:** A message now informs users of successful account registration.
 - **Register page client-side validation:** The username field is validated for emptiness, minimum length, and forbidden characters, displaying appropriate error messages.
 - **Register page client-side email validation:** The email field is validated for proper format, and an error message is displayed if the email is invalid.
+- **Register page client-side password validation:** The password field is validated for a minimum of 8 characters, displaying an error message if the requirement is not met.
 - **My Profile Update page feedback:** A message now informs users of successful profile update.
 - **Update Listing page feedback:** A message now informs users of successful listing update.
 - **Add Property page feedback:** A message now informs users of successful property addition.
