@@ -1,4 +1,4 @@
-import React, { act, useEffect, useState} from 'react'
+import React, { useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import Axios from 'axios'
 import { useImmerReducer } from 'use-immer'
@@ -63,6 +63,7 @@ function Register() {
             hasErrors: false,
             errorMessage: '',
         },
+        password2HelperText: '',
     }
     
     function ReducerFunction(draft, action) {
@@ -84,6 +85,13 @@ function Register() {
                 break
             case 'catchPassword2Change':
                 draft.password2Value = action.password2Chosen;
+                if (action.password2Chosen !== draft.passwordValue){
+                    draft.password2HelperText = 'The passwords must match'
+                }
+                else if 
+                    (action.password2Chosen === draft.passwordValue){
+                    draft.password2HelperText = ''
+                    }
                 break
             case 'changeSendRequest':
                 draft.sendRequest = draft.sendRequest + 1;
@@ -139,8 +147,10 @@ function Register() {
     function FormSubmit(e) {
         e.preventDefault()
         console.log('Form Submitted')
-        dispatch({type: 'changeSendRequest'})
-        dispatch({type: 'disableTheButton'})
+        if (!state.usernameErrors.hasErrors && !state.emailErrors.hasErrors && !state.passwordErrors.hasErrors && state.password2HelperText === ''){
+            dispatch({type: 'changeSendRequest'})
+            dispatch({type: 'disableTheButton'})
+        }
     }
 
     useEffect(() => {
@@ -236,6 +246,7 @@ function Register() {
                     type='password'
                     value={state.password2Value}
                     onChange = {(e) => dispatch({type: 'catchPassword2Change', password2Chosen: e.target.value})}
+                    helperText={state.password2HelperText}
                      />
             </Grid>
             <Grid 
