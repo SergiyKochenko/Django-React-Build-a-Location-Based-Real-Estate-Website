@@ -59,6 +59,10 @@ function Register() {
             hasErrors: false,
             errorMessage: '',
         },
+        passwordErrors: {
+            hasErrors: false,
+            errorMessage: '',
+        },
     }
     
     function ReducerFunction(draft, action) {
@@ -75,6 +79,8 @@ function Register() {
                 break
             case 'catchPasswordChange':
                 draft.passwordValue = action.passwordChosen;
+                draft.passwordErrors.hasErrors = false
+                draft.passwordErrors.errorMessage = ''
                 break
             case 'catchPassword2Change':
                 draft.password2Value = action.password2Chosen;
@@ -113,6 +119,13 @@ function Register() {
                 if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(action.emailChosen)){
                     draft.emailErrors.hasErrors = true
                     draft.emailErrors.errorMessage = 'Please enter a valid email address'
+                }
+                break
+
+            case 'catchPasswordErrors':
+                if (action.passwordChosen.length < 8){
+                    draft.passwordErrors.hasErrors = true
+                    draft.passwordErrors.errorMessage = 'Password must be at least 8 characters long'
                 }
                 break
                 
@@ -209,6 +222,9 @@ function Register() {
                     type='password'
                     value={state.passwordValue}
                     onChange = {(e) => dispatch({type: 'catchPasswordChange', passwordChosen: e.target.value})}
+                    onBlur = {(e) => dispatch({type: 'catchPasswordErrors', passwordChosen: e.target.value})}
+                    error={state.passwordErrors.hasErrors ? true : false}
+                    helperText={state.passwordErrors.errorMessage}
                      />
             </Grid>
             <Grid item container style={{marginTop: '1rem'}}>
