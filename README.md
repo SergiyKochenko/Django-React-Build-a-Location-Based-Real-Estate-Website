@@ -82,6 +82,7 @@ I will be using:
     - [Frontend AddProperty Page Logic](#frontend-addproperty-page-logic)
     - [Making the Request to Add a Property Listing](#making-the-request-to-add-a-property-listing)
     - [Restrictions for Adding a Property Listing](#restrictions-for-adding-a-property-listing)
+    - [Form Error Validation and User Feedback](#form-error-validation-and-user-feedback)
   - [Listings Page Modifications](#listings-page-modifications)
   - [Building the Agencies Page](#building-the-agencies-page)
   - [Building the Agency Detail Page](#building-the-agency-detail-page)
@@ -487,7 +488,7 @@ Users can log out by selecting the "Logout" option from the user menu in the hea
 
 ## Building the Add Property Page
 The Add Property page allows authenticated users to submit new property listings. It includes a form with fields for title, listing type, description, area, borough, property status, geographic coordinates (latitude and longitude), price, rental frequency, number of rooms, and various amenities (e.g., furnished, pool, elevator, CCTV, and parking). Additional fields support image uploads for multiple pictures of the property.
-  
+
 ### Frontend AddProperty Page Logic
 The frontend page now includes enhanced interactive map functionality. When a user selects a borough, the map automatically repositions the marker and updates the latitude/longitude fields. Additionally, uploading pictures immediately previews the selected filenames, ensuring a smoother user experience.
 
@@ -496,6 +497,9 @@ The Add Property page collects user inputs and assembles them into a FormData ob
 
 ### Restrictions for Adding a Property Listing
 Created restrictions in the Add Property page enforcing that only logged-in users with a complete profile (agency name and phone number) can submit a property listing.
+
+### Form Error Validation and User Feedback
+The Add Property form now performs client-side validation of required fields. If any field (such as Title, Listing Type, Property Status, Price, Area, or Borough) is left empty, a specific error message is displayed and the page scrolls to the top, alerting the user to correct the error before submission.
 
 ## Listings Page Modifications
 - Updated Listings.js to fetch all listings using Axios with a cancellation token.
